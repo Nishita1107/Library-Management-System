@@ -66,6 +66,8 @@ h1, h2, h3 {
 
 /* --- Buttons --- */
 .btn {
+  display: inline-block;      /* add this */
+  text-decoration: none;      /* add this */
   padding: 10px 30px;
   font-size: 13px;
   font-weight: 700;
