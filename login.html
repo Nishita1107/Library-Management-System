@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login — RAIT Smart Library</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<style>
+:root {
+  --maroon: #9b1e34;
+  --maroon-light: rgba(155, 30, 52, 0.08);
+  --white: #ffffff;
+  --black: #000000;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  background-color: var(--maroon);
+  color: var(--black);
+}
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Left brand panel */
+.brand-panel {
+  flex: 0 0 18%;
+  background-color: var(--maroon);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 28px 14px;
+  text-align: left;
+}
+.brand-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-logo-img {
+  width: 48px;
+  height: auto;
+  flex-shrink: 0;
+}
+.brand-name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+/* Right form panel */
+.form-panel {
+  flex: 1;
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+.form-container {
+  width: 100%;
+  max-width: 420px;
+}
+.form-container h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px;
+  margin: 0 0 4px;
+}
+.form-container > p.subtitle {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0 0 28px;
+}
+.field {
+  margin-bottom: 20px;
+}
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.field input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  outline: none;
+  font-family: inherit;
+  color: var(--black);
+  background-color: var(--white);
+}
+.field input:focus {
+  border-color: var(--maroon);
+}
+.field input.error {
+  border-color: var(--maroon);
+}
+.error-text {
+  color: var(--maroon);
+  font-size: 12px;
+  margin-top: 4px;
+  display: none;
+}
+.error-text.show {
+  display: block;
+}
+
+/* Password field with show/hide */
+.password-wrap {
+  position: relative;
+}
+.password-wrap input {
+  padding-right: 56px;
+}
+.toggle-visibility {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--maroon);
+  cursor: pointer;
+  padding: 0;
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.toggle-visibility svg {
+  width: 19px;
+  height: 19px;
+  display: block;
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  background-color: var(--maroon);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.submit-btn:hover {
+  opacity: 0.9;
+}
+.signup-note {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 20px;
+}
+.signup-note a {
+  color: var(--maroon);
+  font-weight: 600;
+  text-decoration: none;
+}
+.mobile-brand {
+  display: none;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.mobile-brand p {
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--maroon);
+  margin: 0;
+}
+@media (max-width: 768px) {
+  .brand-panel { display: none; }
+  .mobile-brand { display: block; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <div class="brand-panel">
+    <div class="brand-logo-row">
+      <img class="brand-logo-img" src="logo.png" alt="DY Patil RAIT logo" />
+      <p class="brand-name">Ramrao Adik Institute of Technology</p>
+    </div>
+  </div>
+
+  <div class="form-panel">
+    <div class="form-container">
+
+      <div class="mobile-brand">
+        <p>Ramrao Adik Institute of Technology</p>
+      </div>
+
+      <h2>Login</h2>
+      <p class="subtitle">Enter your credentials to access your library account.</p>
+
+      <form id="loginForm" novalidate>
+
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="name@dypatil.edu" />
+          <div class="error-text" id="emailError">Enter a valid email address.</div>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <div class="password-wrap">
+            <input type="password" id="password" placeholder="Enter your password" />
+            <button type="button" class="toggle-visibility" id="togglePassword" aria-label="Show password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+          <div class="error-text" id="passwordError">Password is required.</div>
+        </div>
+
+        <button type="submit" class="submit-btn">Login</button>
+
+        <p class="signup-note">Don't have an account? <a href="registration.html">Register</a></p>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+$(function () {
+
+  // ---- Show / hide password ----
+  var eyeOpenSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+  var eyeClosedSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle><line x1="3" y1="21" x2="21" y2="3"></line></svg>';
+
+  $("#togglePassword").on("click", function () {
+    var $input = $("#password");
+    if ($input.attr("type") === "password") {
+      $input.attr("type", "text");
+      $(this).html(eyeClosedSVG);
+      $(this).attr("aria-label", "Hide password");
+    } else {
+      $input.attr("type", "password");
+      $(this).html(eyeOpenSVG);
+      $(this).attr("aria-label", "Show password");
+    }
+  });
+
+  // ---- Form validation ----
+  $("#loginForm").on("submit", function (e) {
+    e.preventDefault();
+
+    var valid = true;
+    var email = $("#email").val().trim();
+    var password = $("#password").val();
+
+    $(".error-text").removeClass("show");
+    $(".field input").removeClass("error");
+
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      $("#emailError").text("Email is required.");
+      $("#email").addClass("error");
+      $("#emailError").addClass("show");
+      valid = false;
+    } else if (!emailPattern.test(email)) {
+      $("#emailError").text("Enter a valid email address.");
+      $("#email").addClass("error");
+      $("#emailError").addClass("show");
+      valid = false;
+    }
+
+    if (!password) {
+      $("#password").addClass("error");
+      $("#passwordError").addClass("show");
+      valid = false;
+    }
+
+    if (valid) {
+      alert("Login validated (this is just front-end validation — no backend connected yet).");
+    }
+  });
+
+});
+</script>
+
+</body>
+</html>
