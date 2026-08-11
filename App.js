@@ -30,9 +30,9 @@ function App() {
             <p className="hero-subtext">RAIT Smart Library</p>
 
             <div className="hero-actions">
-              <button className="btn btn-hero">Login</button>
-              <button className="btn btn-hero">Register</button>
-            </div>
+  <button className="btn btn-hero">Login</button>
+  <a href="/registration.html" className="btn btn-hero">Register</a>
+</div>
           </div>
         </div>
       </section>
