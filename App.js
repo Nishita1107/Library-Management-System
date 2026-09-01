@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
 import logo from './logo.png';
 import libraryPhoto from './lib.jpg';
 
 function App() {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/api/books')
+      .then((response) => {
+        setBooks(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching books:', error);
+      });
+  }, []);
+
   return (
     <div className="App">
 
@@ -51,6 +65,8 @@ function App() {
       </section>
 
       {/* Footer */}
+     
+
       <footer className="site-footer" id="contact">
         <div className="footer-grid">
           <div className="footer-col">
