@@ -280,7 +280,7 @@
     height: 6px;
     flex: 1;
     border-radius: 3px;
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(128, 128, 128, 0.25);
   }
  
   .strength-bar.filled {
@@ -292,6 +292,9 @@
     font-weight: 600;
     color: var(--maroon);
   }
+  [data-theme="dark"] .strength-label {
+    color: #ff7b92;
+  }
  
   .checklist {
     list-style: none;
@@ -301,7 +304,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 4px 12px;
     font-size: 11px;
-    color: rgba(0, 0, 0, 0.7);
+    color: var(--subtitle-color);
   }
  
   .checklist li {
@@ -314,7 +317,7 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(128, 128, 128, 0.25);
     color: transparent;
     font-size: 9px;
     display: flex;
@@ -325,7 +328,7 @@
  
   .check-dot.ok {
     background-color: var(--maroon);
-    color: var(--white);
+    color: #ffffff;
   }
  
   .submit-btn {
@@ -334,7 +337,7 @@
     padding: 12px 0;
     font-size: 14px;
     font-weight: 600;
-    color: var(--white);
+    color: #ffffff;
     background-color: var(--maroon);
     border: none;
     border-radius: 6px;
@@ -348,7 +351,7 @@
   .login-note {
     text-align: center;
     font-size: 12px;
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--subtitle-color);
     margin-top: 20px;
   }
  
@@ -356,6 +359,9 @@
     color: var(--maroon);
     font-weight: 600;
     cursor: pointer;
+  }
+  [data-theme="dark"] .login-note span {
+    color: #ff7b92;
   }
  
   .success-box {
@@ -366,6 +372,11 @@
     border-radius: 6px;
     padding: 16px;
     font-size: 14px;
+  }
+  [data-theme="dark"] .success-box {
+    background-color: #2c1616;
+    color: #ff7b92;
+    border-color: #b82b43;
   }
  
   .success-box.show {
@@ -691,7 +702,7 @@ $(function () {
       $btn.prop("disabled", true).text("Registering...");
 
       $.ajax({
-        url: "http://localhost:5000/api/auth/register",
+        url: "/api/auth/register",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({
@@ -701,7 +712,17 @@ $(function () {
           password: password,
           role: currentRole
         }),
-        success: function () {
+        success: function (res) {
+          if (res && res.token && res.user) {
+            localStorage.setItem("token", res.token);
+            localStorage.setItem("user", JSON.stringify(res.user));
+            if (res.user.role === "admin") {
+              window.location.href = "/admin.html";
+            } else {
+              window.location.href = "/dashboard.html";
+            }
+            return;
+          }
           $("#registerForm").hide();
           $("#successBox").addClass("show");
         },

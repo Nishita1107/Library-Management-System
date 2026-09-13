@@ -37,7 +37,26 @@ router.post("/register", async (req, res) => {
 
     await user.save();
 
-    res.status(201).json({ message: "Registration successful. You can now log in." });
+    const token = jwt.sign(
+      { id: user._id, role: user.role, name: user.name },
+      JWT_SECRET,
+      { expiresIn: "8h" }
+    );
+
+    res.status(201).json({
+      message: "Registration successful.",
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        idNumber: user.idNumber,
+        profilePic: user.profilePic || "",
+        phone: user.phone || "",
+        bio: user.bio || ""
+      }
+    });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
   }

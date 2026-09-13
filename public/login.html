@@ -406,14 +406,18 @@ $(function () {
       $btn.prop("disabled", true).text("Logging in...");
 
       $.ajax({
-        url: "http://localhost:5000/api/auth/login",
+        url: "/api/auth/login",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({ email: email, password: password }),
         success: function (res) {
           localStorage.setItem("token", res.token);
           localStorage.setItem("user", JSON.stringify(res.user));
-          window.location.href = "/dashboard.html";
+          if (res.user && res.user.role === "admin") {
+            window.location.href = "/admin.html";
+          } else {
+            window.location.href = "/dashboard.html";
+          }
         },
         error: function (xhr) {
           var msg = (xhr.responseJSON && xhr.responseJSON.message) || "Login failed. Please try again.";
