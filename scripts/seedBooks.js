@@ -11,7 +11,9 @@ try {
 
 const Book = require("../models/Book");
 
-const dataPath = path.join(__dirname, "../books_dataset_researched.json");
+const dataPath = fs.existsSync(path.join(__dirname, "../data/books_dataset_researched.json"))
+  ? path.join(__dirname, "../data/books_dataset_researched.json")
+  : path.join(__dirname, "../books_dataset_researched.json");
 
 async function seedBooks() {
   try {
