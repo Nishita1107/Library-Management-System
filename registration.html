@@ -573,8 +573,31 @@ $(function () {
     }
  
     if (valid) {
-      $("#registerForm").hide();
-      $("#successBox").addClass("show");
+      var $btn = $(".submit-btn");
+      $btn.prop("disabled", true).text("Registering...");
+
+      $.ajax({
+        url: "http://localhost:5000/api/auth/register",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+          name: name,
+          idNumber: idNumber,
+          email: email,
+          password: password,
+          role: currentRole
+        }),
+        success: function () {
+          $("#registerForm").hide();
+          $("#successBox").addClass("show");
+        },
+        error: function (xhr) {
+          var msg = (xhr.responseJSON && xhr.responseJSON.message) || "Registration failed. Please try again.";
+          $("#emailError").text(msg);
+          showError("#email", "#emailError");
+          $btn.prop("disabled", false).text("Register");
+        }
+      });
     }
   });
  
