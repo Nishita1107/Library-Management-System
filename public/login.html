@@ -4,6 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Login — RAIT Smart Library</title>
+<script>
+  (function() {
+    var match = document.cookie.match(new RegExp('(^| )theme=([^;]+)'));
+    var theme = (match ? match[2] : null) || localStorage.getItem('theme');
+    if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  })();
+</script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <style>
 :root {
@@ -11,13 +18,34 @@
   --maroon-light: rgba(155, 30, 52, 0.08);
   --white: #ffffff;
   --black: #000000;
+  --bg-page: #9b1e34;
+  --bg-panel: #ffffff;
+  --text-color: #000000;
+  --subtitle-color: rgba(0, 0, 0, 0.6);
+  --input-bg: #ffffff;
+  --input-border: rgba(0, 0, 0, 0.2);
 }
+
+[data-theme="dark"], body[data-theme="dark"] {
+  --maroon: #b82b43;
+  --maroon-light: rgba(184, 43, 67, 0.15);
+  --white: #1e1e1e;
+  --black: #f0f0f0;
+  --bg-page: #15080a;
+  --bg-panel: #1e1e1e;
+  --text-color: #f0f0f0;
+  --subtitle-color: rgba(255, 255, 255, 0.65);
+  --input-bg: #292929;
+  --input-border: #444444;
+}
+
 * { box-sizing: border-box; }
 body {
   margin: 0;
   font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-  background-color: var(--maroon);
-  color: var(--black);
+  background-color: var(--bg-page);
+  color: var(--text-color);
+  transition: background-color 0.2s, color 0.2s;
 }
 .wrapper {
   min-height: 100vh;
@@ -27,8 +55,8 @@ body {
 /* Left brand panel */
 .brand-panel {
   flex: 0 0 18%;
-  background-color: var(--maroon);
-  color: var(--white);
+  background-color: var(--bg-page);
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,11 +85,12 @@ body {
 /* Right form panel */
 .form-panel {
   flex: 1;
-  background-color: var(--white);
+  background-color: var(--bg-panel);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 40px 24px;
+  position: relative;
 }
 .form-container {
   width: 100%;
@@ -71,10 +100,11 @@ body {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 26px;
   margin: 0 0 4px;
+  color: var(--text-color);
 }
 .form-container > p.subtitle {
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--subtitle-color);
   margin: 0 0 28px;
 }
 .field {
@@ -85,17 +115,19 @@ body {
   font-size: 12px;
   font-weight: 600;
   margin-bottom: 6px;
+  color: var(--text-color);
 }
 .field input {
   width: 100%;
   padding: 10px 12px;
   font-size: 14px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--input-border);
   border-radius: 6px;
   outline: none;
   font-family: inherit;
-  color: var(--black);
-  background-color: var(--white);
+  color: var(--text-color);
+  background-color: var(--input-bg);
+  transition: border-color 0.2s;
 }
 .field input:focus {
   border-color: var(--maroon);
@@ -111,6 +143,29 @@ body {
 }
 .error-text.show {
   display: block;
+}
+
+/* Theme toggle button */
+.theme-toggle-btn {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: rgba(128, 128, 128, 0.15);
+  border: 1px solid var(--input-border);
+  color: var(--text-color);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.2s;
+}
+.theme-toggle-btn:hover {
+  background: rgba(128, 128, 128, 0.3);
 }
 
 /* Password field with show/hide */
@@ -147,11 +202,12 @@ body {
   padding: 12px 0;
   font-size: 14px;
   font-weight: 600;
-  color: var(--white);
+  color: #ffffff;
   background-color: var(--maroon);
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: opacity 0.2s;
 }
 .submit-btn:hover {
   opacity: 0.9;
@@ -159,7 +215,7 @@ body {
 .signup-note {
   text-align: center;
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--subtitle-color);
   margin-top: 20px;
 }
 .signup-note a {
@@ -197,6 +253,8 @@ body {
   </div>
 
   <div class="form-panel">
+    <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle dark/light theme" aria-label="Toggle theme">🌙</button>
+
     <div class="form-container">
 
       <div class="mobile-brand">
@@ -237,7 +295,38 @@ body {
 </div>
 
 <script>
+// ── Theme management ─────────────────────────────────────────────────────────
+function getCookie(name) {
+  var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : null;
+}
+
+function applyTheme(theme) {
+  if (theme === "dark") {
+    $("body").attr("data-theme", "dark");
+    document.documentElement.setAttribute("data-theme", "dark");
+    $("#themeToggleBtn").html("☀️");
+  } else {
+    $("body").removeAttr("data-theme");
+    document.documentElement.removeAttribute("data-theme");
+    $("#themeToggleBtn").html("🌙");
+  }
+  try { localStorage.setItem("theme", theme); } catch(e) {}
+  document.cookie = "theme=" + theme + "; path=/; max-age=31536000";
+}
+
+function initTheme() {
+  var saved = getCookie("theme") || localStorage.getItem("theme") || "light";
+  applyTheme(saved);
+
+  $("#themeToggleBtn").on("click", function () {
+    var cur = $("body").attr("data-theme") === "dark" || document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    applyTheme(cur);
+  });
+}
+
 $(function () {
+  initTheme();
 
   // ---- Show / hide password ----
   var eyeOpenSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';

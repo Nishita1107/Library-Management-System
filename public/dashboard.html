@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard — RAIT Smart Library</title>
+  <script>
+    (function() {
+      var match = document.cookie.match(new RegExp('(^| )theme=([^;]+)'));
+      var theme = (match ? match[2] : null) || localStorage.getItem('theme');
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <style>
@@ -13,87 +20,131 @@
       --maroon-light: #fdf5f5;
       --white: #ffffff;
       --gray: #f4f4f4;
-      --text: #222;
-      --muted: #666;
+      --card-bg: #ffffff;
+      --text: #222222;
+      --muted: #666666;
+      --border: #e0e0e0;
       --green: #1a7a1a;
       --green-bg: #edfaed;
       --orange: #b85c00;
       --orange-bg: #fff4e5;
       --red: #c00;
       --red-bg: #ffeaea;
+      --input-bg: #ffffff;
+      --table-hover: #fafafa;
     }
+
+    [data-theme="dark"], body[data-theme="dark"] {
+      --maroon: #9e2a2b;
+      --maroon-dark: #1a0c0c;
+      --maroon-light: #2c1616;
+      --white: #1e1e1e;
+      --gray: #121212;
+      --card-bg: #1e1e1e;
+      --text: #f0f0f0;
+      --muted: #aaaaaa;
+      --border: #333333;
+      --green: #4caf50;
+      --green-bg: #132a13;
+      --orange: #ffa726;
+      --orange-bg: #2e1e07;
+      --red: #ef5350;
+      --red-bg: #331010;
+      --input-bg: #292929;
+      --table-hover: #262626;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system,"Segoe UI",Helvetica,Arial,sans-serif; background: var(--gray); color: var(--text); }
+    body { font-family: -apple-system,"Segoe UI",Helvetica,Arial,sans-serif; background: var(--gray); color: var(--text); transition: background-color 0.2s, color 0.2s; }
 
     /* Navbar */
     .navbar { background: var(--maroon-dark); color: var(--white); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; height: 60px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
     .nav-brand { display: flex; align-items: center; gap: 12px; }
     .nav-brand img { height: 38px; width: auto; }
-    .nav-brand span { font-size: 15px; font-weight: 700; }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .user-pill { background: rgba(255,255,255,0.12); border-radius: 20px; padding: 5px 14px; font-size: 13px; display: flex; align-items: center; gap: 8px; }
-    .role-badge { background: var(--maroon); border-radius: 10px; padding: 2px 8px; font-size: 11px; text-transform: capitalize; font-weight: 600; }
+    .nav-brand span { font-size: 15px; font-weight: 700; color: #ffffff; }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .user-pill { background: rgba(255,255,255,0.12); border-radius: 20px; padding: 5px 14px; font-size: 13px; display: flex; align-items: center; gap: 8px; color: #ffffff; }
+    .role-badge { background: var(--maroon); border-radius: 10px; padding: 2px 8px; font-size: 11px; text-transform: capitalize; font-weight: 600; color: #ffffff; }
     .logout-btn { background: transparent; border: 1.5px solid rgba(255,255,255,0.4); color: var(--white); padding: 6px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit; font-weight: 600; }
     .logout-btn:hover { background: rgba(255,255,255,0.15); }
+    .theme-toggle-btn { background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.3); color: #ffffff; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: background 0.2s; }
+    .theme-toggle-btn:hover { background: rgba(255,255,255,0.25); }
 
     /* Layout */
     .page { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
 
     /* Welcome */
-    .welcome-card { background: var(--maroon); color: var(--white); border-radius: 14px; padding: 28px 32px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-    .welcome-card h1 { font-size: 22px; font-weight: 700; }
+    .welcome-card { background: var(--maroon); color: #ffffff; border-radius: 14px; padding: 28px 32px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .welcome-card h1 { font-size: 22px; font-weight: 700; color: #ffffff; }
     .welcome-stats { display: flex; gap: 28px; }
     .stat { text-align: center; }
-    .stat-num { font-size: 28px; font-weight: 800; }
-    .stat-label { font-size: 12px; opacity: 0.8; }
+    .stat-num { font-size: 28px; font-weight: 800; color: #ffffff; }
+    .stat-label { font-size: 12px; opacity: 0.85; color: #ffffff; }
 
     /* Stat cards */
     .cards-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
-    .info-card { background: var(--white); border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+    .info-card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border: 1px solid var(--border); }
     .info-card .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 8px; }
     .info-card .value { font-size: 24px; font-weight: 800; color: var(--maroon); }
 
     /* Section */
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-    .section-header h2 { font-size: 18px; font-weight: 700; color: var(--maroon-dark); }
+    .section-header h2 { font-size: 18px; font-weight: 700; color: var(--text); }
+
+    /* Filter & Search Toolbar */
+    .filter-toolbar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .search-input-wrap { flex: 2; min-width: 240px; position: relative; }
+    .filter-input { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--input-bg); color: var(--text); outline: none; transition: border-color 0.2s; }
+    .filter-input:focus, .filter-select:focus { border-color: var(--maroon); }
+    .filter-dropdowns { display: flex; gap: 12px; flex: 2; min-width: 260px; }
+    .filter-select { flex: 1; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--input-bg); color: var(--text); outline: none; cursor: pointer; transition: border-color 0.2s; }
 
     /* Books grid */
     .books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 32px; }
-    .book-card { background: var(--white); border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-left: 4px solid var(--maroon); display: flex; flex-direction: column; gap: 8px; }
-    .book-title { font-size: 15px; font-weight: 700; color: var(--maroon-dark); }
+    .book-card { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-left: 4px solid var(--maroon); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+    .book-title { font-size: 15px; font-weight: 700; color: var(--text); }
     .book-author { font-size: 13px; color: var(--muted); }
     .book-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
     .qty-badge { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: var(--green-bg); color: var(--green); }
     .qty-badge.out { background: var(--red-bg); color: var(--red); }
-    .borrow-btn { font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 6px; border: none; cursor: pointer; background: var(--maroon); color: var(--white); font-family: inherit; transition: opacity 0.2s; }
+    .borrow-btn { font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 6px; border: none; cursor: pointer; background: var(--maroon); color: #ffffff; font-family: inherit; transition: opacity 0.2s; }
     .borrow-btn:hover:not(:disabled) { opacity: 0.85; }
-    .borrow-btn:disabled { background: #ccc; cursor: not-allowed; }
+    .borrow-btn:disabled { background: #888; opacity: 0.6; cursor: not-allowed; }
     .borrow-btn.borrowed { background: var(--green-bg); color: var(--green); border: 1.5px solid var(--green); }
 
     /* Borrowed books table */
-    .borrow-table-wrap { background: var(--white); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; margin-bottom: 32px; }
+    .borrow-table-wrap { background: var(--card-bg); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border: 1px solid var(--border); overflow-x: auto; margin-bottom: 32px; }
     table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    thead { background: var(--maroon-dark); color: var(--white); }
+    thead { background: var(--maroon-dark); color: #ffffff; }
     th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
-    td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: #fafafa; }
+    tr:hover td { background: var(--table-hover); }
 
     /* Status badges */
     .status-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
     .status-active   { background: var(--green-bg);  color: var(--green);  }
     .status-overdue  { background: var(--red-bg);    color: var(--red);    }
     .status-duesoon  { background: var(--orange-bg); color: var(--orange); }
-    .status-returned { background: #f0f0f0;           color: #555;          }
+    .status-returned { background: rgba(128,128,128,0.2); color: var(--muted); }
 
     /* Action buttons */
-    .return-btn { font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 6px; border: none; cursor: pointer; background: var(--maroon); color: var(--white); font-family: inherit; transition: opacity 0.2s; }
+    .action-group { display: flex; gap: 6px; align-items: center; }
+    .return-btn { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 6px; border: none; cursor: pointer; background: var(--maroon); color: #ffffff; font-family: inherit; transition: opacity 0.2s; }
     .return-btn:hover { opacity: 0.85; }
-    .pay-btn { font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 6px; border: none; cursor: pointer; background: #f59f00; color: #fff; font-family: inherit; transition: opacity 0.2s; }
+    .renew-btn { font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 6px; border: 1.5px solid var(--maroon); cursor: pointer; background: transparent; color: var(--maroon); font-family: inherit; transition: all 0.2s; }
+    .renew-btn:hover:not(:disabled) { background: var(--maroon); color: #ffffff; }
+    .renew-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .pay-btn { font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 6px; border: none; cursor: pointer; background: #f59f00; color: #fff; font-family: inherit; transition: opacity 0.2s; }
     .pay-btn:hover { opacity: 0.85; }
 
+    /* Receipt notification banner */
+    .receipt-banner { background: var(--green-bg); border: 1.5px solid var(--green); border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: var(--text); }
+    .download-receipt-btn { background: var(--green); color: #fff; text-decoration: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
+    .download-receipt-btn:hover { opacity: 0.9; }
+
     /* Empty / loading */
-    .empty-state { text-align: center; padding: 48px 20px; background: var(--white); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); color: var(--muted); }
+    .empty-state { text-align: center; padding: 48px 20px; background: var(--card-bg); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border: 1px solid var(--border); color: var(--muted); }
     .empty-state p { font-size: 14px; }
     .spinner { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
 
@@ -110,6 +161,7 @@
       .nav-brand span { display: none; }
       table { font-size: 12px; }
       th, td { padding: 10px; }
+      .filter-toolbar { flex-direction: column; }
     }
   </style>
 </head>
@@ -121,6 +173,7 @@
     <span>RAIT Smart Library</span>
   </div>
   <div class="nav-right">
+    <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle dark/light theme" aria-label="Toggle theme">🌙</button>
     <div id="adminNavLink"></div>
     <div class="user-pill">
       <span id="navUserName">...</span>
@@ -159,6 +212,9 @@
     </div>
   </div>
 
+  <!-- Container for post-payment downloadable receipt banner -->
+  <div id="receiptBannerSlot"></div>
+
   <!-- My Borrowed Books -->
   <div class="section-header">
     <h2>My Borrowed Books</h2>
@@ -167,10 +223,26 @@
     <div class="spinner">Loading...</div>
   </div>
 
-  <!-- All Books -->
+  <!-- All Books Section Header & Search/Filter Toolbar -->
   <div class="section-header" style="margin-top:32px;">
     <h2>All Books</h2>
   </div>
+
+  <div class="filter-toolbar">
+    <div class="search-input-wrap">
+      <input type="text" id="dashboardSearch" class="filter-input" placeholder="Search by title or author..." />
+    </div>
+    <div class="filter-dropdowns">
+      <select id="dashboardTagFilter" class="filter-select">
+        <option value="">All Genres / Subjects</option>
+      </select>
+      <select id="dashboardAvailFilter" class="filter-select">
+        <option value="">All Books</option>
+        <option value="true">Available Only</option>
+      </select>
+    </div>
+  </div>
+
   <div id="booksContainer">
     <div class="spinner">Loading books...</div>
   </div>
@@ -181,6 +253,45 @@
 
 <script>
 var TOKEN, USER, borrowedBookIds = {};
+var searchDebounceTimer = null;
+
+var POPULAR_TAGS = [
+  "C", "C++", "Java", "Python", "JavaScript",
+  "DBMS", "OOP", "Data Structures", "Operating Systems",
+  "Computer Networks", "Mathematics", "Web Development",
+  "AI/ML", "Software Engineering", "Compiler Design",
+  "Cryptography", "Cloud Computing", "Mobile Development"
+];
+
+// ── Theme management ─────────────────────────────────────────────────────────
+function getCookie(name) {
+  var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : null;
+}
+
+function applyTheme(theme) {
+  if (theme === "dark") {
+    $("body").attr("data-theme", "dark");
+    document.documentElement.setAttribute("data-theme", "dark");
+    $("#themeToggleBtn").html("☀️");
+  } else {
+    $("body").removeAttr("data-theme");
+    document.documentElement.removeAttribute("data-theme");
+    $("#themeToggleBtn").html("🌙");
+  }
+  try { localStorage.setItem("theme", theme); } catch(e) {}
+  document.cookie = "theme=" + theme + "; path=/; max-age=31536000";
+}
+
+function initTheme() {
+  var saved = getCookie("theme") || localStorage.getItem("theme") || "light";
+  applyTheme(saved);
+
+  $("#themeToggleBtn").on("click", function () {
+    var cur = $("body").attr("data-theme") === "dark" || document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    applyTheme(cur);
+  });
+}
 
 // ── Toast ────────────────────────────────────────────────────────────────────
 function showToast(msg, type) {
@@ -216,7 +327,6 @@ function openRazorpay(borrowId, fine) {
           email: USER.email
         },
         handler: function (response) {
-          // Verify payment on backend
           showToast("Verifying payment...", "info");
           $.ajax({
             url: "http://localhost:5000/api/payments/verify",
@@ -230,6 +340,16 @@ function openRazorpay(borrowId, fine) {
             }),
             success: function (res) {
               showToast("Payment of \u20B9" + res.fine + " successful! Book returned.", "success");
+
+              // Display Download Receipt button
+              if (res.receiptUrl) {
+                var receiptHtml = '<div class="receipt-banner">' +
+                  '<div><strong>Payment Verified!</strong> Return processed and fine of \u20B9' + res.fine + ' cleared. (Payment ID: ' + res.paymentId + ')</div>' +
+                  '<a href="http://localhost:5000' + res.receiptUrl + '" target="_blank" class="download-receipt-btn">📄 Download Receipt (PDF)</a>' +
+                  '</div>';
+                $("#receiptBannerSlot").html(receiptHtml);
+              }
+
               loadMyBorrows(function () { loadBooks(); });
             },
             error: function (xhr) {
@@ -263,7 +383,9 @@ function loadMyBorrows(callback) {
       var totalFine = 0, dueSoon = 0;
 
       active.forEach(function (b) {
-        borrowedBookIds[b.book._id] = b._id;
+        if (b.book && b.book._id) {
+          borrowedBookIds[b.book._id] = b._id;
+        }
         totalFine += b.fine || 0;
         if (b.dueSoon) dueSoon++;
       });
@@ -296,26 +418,32 @@ function loadMyBorrows(callback) {
           statusLabel = "Active"; statusClass = "status-active";
         }
 
-        var actionBtn = "–";
+        var actionHtml = "–";
         if (b.status !== "returned") {
-          if (b.fine > 0) {
+          if (b.fine > 0 || b.status === "overdue") {
             // Overdue — payment required
-            actionBtn = '<button class="pay-btn" data-id="' + b._id + '" data-fine="' + b.fine + '">' +
+            actionHtml = '<button class="pay-btn" data-id="' + b._id + '" data-fine="' + b.fine + '">' +
               'Pay \u20B9' + b.fine + ' &amp; Return</button>';
           } else {
-            // No fine — plain return
-            actionBtn = '<button class="return-btn" data-id="' + b._id + '">Return</button>';
+            // Active & not overdue — can return or renew
+            actionHtml = '<div class="action-group">' +
+              '<button class="return-btn" data-id="' + b._id + '">Return</button>' +
+              '<button class="renew-btn" data-id="' + b._id + '" title="Extend loan by 14 days">Renew</button>' +
+              '</div>';
           }
         }
 
+        var bookTitle  = b.book ? b.book.title : "Unknown Title";
+        var bookAuthor = b.book ? b.book.author : "Unknown Author";
+
         html += "<tr>" +
-          "<td><strong>" + $("<div>").text(b.book.title).html() + "</strong></td>" +
-          "<td>" + $("<div>").text(b.book.author).html() + "</td>" +
+          "<td><strong>" + $("<div>").text(bookTitle).html() + "</strong></td>" +
+          "<td>" + $("<div>").text(bookAuthor).html() + "</td>" +
           "<td>" + formatDate(b.borrowDate) + "</td>" +
           "<td>" + formatDate(b.dueDate) + "</td>" +
           "<td>" + (b.fine > 0 ? "\u20B9" + b.fine : "–") + "</td>" +
           '<td><span class="status-badge ' + statusClass + '">' + statusLabel + "</span></td>" +
-          "<td>" + actionBtn + "</td>" +
+          "<td>" + actionHtml + "</td>" +
           "</tr>";
       });
 
@@ -341,6 +469,25 @@ function loadMyBorrows(callback) {
         });
       });
 
+      // Renew borrow (+14 days)
+      $(document).off("click", ".renew-btn").on("click", ".renew-btn", function () {
+        var borrowId = $(this).data("id");
+        var $btn = $(this).prop("disabled", true).text("Renewing...");
+        $.ajax({
+          url: "http://localhost:5000/api/borrows/" + borrowId + "/renew",
+          method: "PUT",
+          headers: { Authorization: "Bearer " + TOKEN },
+          success: function (res) {
+            showToast(res.message || "Book renewed! Due date extended by 14 days.", "success");
+            loadMyBorrows(function () { loadBooks(); });
+          },
+          error: function (xhr) {
+            showToast((xhr.responseJSON && xhr.responseJSON.message) || "Renewal failed.", "error");
+            $btn.prop("disabled", false).text("Renew");
+          }
+        });
+      });
+
       // Pay fine & return (Razorpay)
       $(document).off("click", ".pay-btn").on("click", ".pay-btn", function () {
         var borrowId = $(this).data("id");
@@ -359,28 +506,46 @@ function loadMyBorrows(callback) {
   });
 }
 
-// ── Load all books ───────────────────────────────────────────────────────────
+// ── Load all books with Search & Filter ──────────────────────────────────────
 function loadBooks() {
+  var search = $("#dashboardSearch").val() ? $("#dashboardSearch").val().trim() : "";
+  var tag    = $("#dashboardTagFilter").val() || "";
+  var avail  = $("#dashboardAvailFilter").val() || "";
+
+  var queryParams = [];
+  if (search) queryParams.push("search=" + encodeURIComponent(search));
+  if (tag)    queryParams.push("tags=" + encodeURIComponent(tag));
+  if (avail)  queryParams.push("available=" + encodeURIComponent(avail));
+
+  var url = "http://localhost:5000/api/books" + (queryParams.length ? "?" + queryParams.join("&") : "");
+
   $.ajax({
-    url: "http://localhost:5000/api/books",
+    url: url,
     headers: { Authorization: "Bearer " + TOKEN },
     success: function (books) {
-      $("#totalBooks").text(books.length);
-      var avail = books.filter(function (b) { return b.quantity > 0; }).length;
-      $("#availBooks").text(avail);
+      // Update top total stats only when unfiltered
+      if (!search && !tag && !avail) {
+        $("#totalBooks").text(books.length);
+        var totalAvail = books.filter(function (b) {
+          var qty = (b.availableCopies !== undefined ? b.availableCopies : b.quantity);
+          return qty > 0;
+        }).length;
+        $("#availBooks").text(totalAvail);
+      }
 
       if (books.length === 0) {
         $("#booksContainer").html(
-          '<div class="empty-state"><p>No books in the library yet.</p></div>'
+          '<div class="empty-state"><p>No books match your search or filter.</p></div>'
         );
         return;
       }
 
       var html = '<div class="books-grid">';
       books.forEach(function (book) {
-        var outOfStock  = book.quantity < 1;
+        var qty = book.availableCopies !== undefined ? book.availableCopies : (book.quantity || 0);
+        var outOfStock  = qty < 1;
         var alreadyHave = !!borrowedBookIds[book._id];
-        var qtyLabel    = outOfStock ? "Out of stock" : book.quantity + " available";
+        var qtyLabel    = outOfStock ? "Out of stock" : qty + " available";
         var btnText     = alreadyHave ? "Borrowed" : "Borrow";
         var btnClass    = alreadyHave ? " borrowed" : "";
         var btnDis      = (outOfStock || alreadyHave) ? " disabled" : "";
@@ -392,7 +557,7 @@ function loadBooks() {
         html += '<div class="book-card">' +
           coverHtml +
           '<div class="book-title">' + $("<div>").text(book.title).html() + "</div>" +
-          '<div class="book-author">by ' + $("<div>").text(book.author).html() + "</div>" +
+          '<div class="book-author">by ' + $("<div>").text(book.author).html() + (book.publishingYear ? " &bull; " + book.publishingYear : "") + "</div>" +
           '<div class="book-footer">' +
             '<span class="qty-badge' + (outOfStock ? " out" : "") + '">' + qtyLabel + "</span>" +
             '<button class="borrow-btn' + btnClass + '" data-id="' + book._id + '"' + btnDis + '>' + btnText + "</button>" +
@@ -430,6 +595,8 @@ function loadBooks() {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 $(function () {
+  initTheme();
+
   TOKEN = localStorage.getItem("token");
   USER  = JSON.parse(localStorage.getItem("user") || "null");
 
@@ -442,6 +609,24 @@ $(function () {
   if (USER.role === "admin") {
     $("#adminNavLink").html('<a href="/admin.html" style="color:rgba(255,255,255,0.85);font-size:13px;font-weight:700;text-decoration:none;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.12);">Admin Panel</a>');
   }
+
+  // Populate tag filter options
+  POPULAR_TAGS.forEach(function (tag) {
+    $("#dashboardTagFilter").append($("<option>", { value: tag, text: tag }));
+  });
+
+  // Debounced search input handler
+  $("#dashboardSearch").on("input", function () {
+    clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = setTimeout(function () {
+      loadBooks();
+    }, 300);
+  });
+
+  // Filter dropdown change handlers
+  $("#dashboardTagFilter, #dashboardAvailFilter").on("change", function () {
+    loadBooks();
+  });
 
   $("#logoutBtn").on("click", function () {
     localStorage.removeItem("token");

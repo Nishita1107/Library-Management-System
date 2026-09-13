@@ -4,41 +4,75 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel — RAIT Smart Library</title>
+  <script>
+    (function() {
+      var match = document.cookie.match(new RegExp('(^| )theme=([^;]+)'));
+      var theme = (match ? match[2] : null) || localStorage.getItem('theme');
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <style>
     :root {
       --maroon: #800000;
       --maroon-dark: #2a1414;
       --maroon-light: #fdf5f5;
-      --white: #fff;
+      --white: #ffffff;
       --gray: #f4f4f4;
-      --muted: #666;
+      --card-bg: #ffffff;
+      --text: #222222;
+      --muted: #666666;
+      --border: #e0e0e0;
       --red: #c00;
       --red-bg: #ffeaea;
       --green: #1a7a1a;
       --green-bg: #edfaed;
-      --border: #e0e0e0;
+      --orange: #b85c00;
+      --orange-bg: #fff4e5;
+      --input-bg: #ffffff;
     }
+
+    [data-theme="dark"], body[data-theme="dark"] {
+      --maroon: #9e2a2b;
+      --maroon-dark: #1a0c0c;
+      --maroon-light: #2c1616;
+      --white: #1e1e1e;
+      --gray: #121212;
+      --card-bg: #1e1e1e;
+      --text: #f0f0f0;
+      --muted: #aaaaaa;
+      --border: #333333;
+      --red: #ef5350;
+      --red-bg: #331010;
+      --green: #4caf50;
+      --green-bg: #132a13;
+      --orange: #ffa726;
+      --orange-bg: #2e1e07;
+      --input-bg: #292929;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system,"Segoe UI",Helvetica,Arial,sans-serif; background: var(--gray); color: #222; }
+    body { font-family: -apple-system,"Segoe UI",Helvetica,Arial,sans-serif; background: var(--gray); color: var(--text); transition: background-color 0.2s, color 0.2s; }
 
     /* Navbar */
     .navbar { background: var(--maroon-dark); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; height: 60px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
     .nav-brand { display: flex; align-items: center; gap: 12px; }
     .nav-brand img { height: 38px; }
-    .nav-brand span { font-size: 15px; font-weight: 700; }
+    .nav-brand span { font-size: 15px; font-weight: 700; color: #fff; }
     .nav-right { display: flex; gap: 12px; align-items: center; }
-    .nav-link { color: rgba(255,255,255,0.8); font-size: 13px; font-weight: 600; text-decoration: none; padding: 6px 14px; border-radius: 6px; }
-    .nav-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-link { color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 600; text-decoration: none; padding: 6px 14px; border-radius: 6px; }
+    .nav-link:hover { background: rgba(255,255,255,0.12); color: #fff; }
     .logout-btn { background: transparent; border: 1.5px solid rgba(255,255,255,0.4); color: #fff; padding: 6px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit; font-weight: 600; }
     .logout-btn:hover { background: rgba(255,255,255,0.15); }
+    .theme-toggle-btn { background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.3); color: #ffffff; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: background 0.2s; }
+    .theme-toggle-btn:hover { background: rgba(255,255,255,0.25); }
 
     /* Layout */
     .page { max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: 420px 1fr; gap: 28px; align-items: start; }
     @media (max-width: 900px) { .page { grid-template-columns: 1fr; } }
 
     /* Panel card */
-    .panel { background: var(--white); border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); overflow: hidden; }
+    .panel { background: var(--card-bg); border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border: 1px solid var(--border); overflow: hidden; }
     .panel-header { background: var(--maroon); color: #fff; padding: 18px 24px; font-size: 16px; font-weight: 700; }
     .panel-body { padding: 24px; }
 
@@ -48,14 +82,15 @@
     .field input, .field textarea, .field select {
       width: 100%; padding: 10px 14px; border: 1.5px solid var(--border);
       border-radius: 8px; font-size: 14px; font-family: inherit;
+      background: var(--input-bg); color: var(--text);
       transition: border-color 0.2s;
     }
-    .field input:focus, .field textarea:focus { outline: none; border-color: var(--maroon); }
+    .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: var(--maroon); }
     .field textarea { resize: vertical; min-height: 70px; }
     .field input.error { border-color: var(--red); }
 
     /* Image preview */
-    .img-preview { margin-top: 10px; border-radius: 8px; overflow: hidden; border: 1.5px solid var(--border); background: #f9f9f9; height: 140px; display: flex; align-items: center; justify-content: center; }
+    .img-preview { margin-top: 10px; border-radius: 8px; overflow: hidden; border: 1.5px solid var(--border); background: var(--input-bg); height: 140px; display: flex; align-items: center; justify-content: center; }
     .img-preview img { max-height: 140px; max-width: 100%; object-fit: contain; display: none; }
     .img-preview .placeholder { font-size: 12px; color: var(--muted); }
 
@@ -65,13 +100,21 @@
     .tag-chips { display: flex; flex-wrap: wrap; gap: 7px; }
     .tag-chip { display: flex; align-items: center; gap: 5px; }
     .tag-chip input[type="checkbox"] { accent-color: var(--maroon); width: 14px; height: 14px; cursor: pointer; }
-    .tag-chip label { font-size: 13px; cursor: pointer; padding: 4px 10px; border-radius: 20px; background: var(--gray); border: 1.5px solid var(--border); transition: all 0.15s; user-select: none; }
+    .tag-chip label { font-size: 13px; cursor: pointer; padding: 4px 10px; border-radius: 20px; background: var(--gray); border: 1.5px solid var(--border); color: var(--text); transition: all 0.15s; user-select: none; }
     .tag-chip input:checked + label { background: var(--maroon-light); border-color: var(--maroon); color: var(--maroon); font-weight: 700; }
 
     /* Submit */
     .submit-btn { width: 100%; padding: 12px; background: var(--maroon); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: opacity 0.2s; margin-top: 4px; }
     .submit-btn:hover:not(:disabled) { opacity: 0.88; }
     .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Search & Filter toolbar */
+    .filter-toolbar { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+    .search-input-wrap { flex: 2; min-width: 180px; }
+    .filter-input { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; background: var(--input-bg); color: var(--text); outline: none; transition: border-color 0.2s; }
+    .filter-input:focus, .filter-select:focus { border-color: var(--maroon); }
+    .filter-dropdowns { display: flex; gap: 8px; flex: 2; min-width: 220px; }
+    .filter-select { flex: 1; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; background: var(--input-bg); color: var(--text); outline: none; cursor: pointer; transition: border-color 0.2s; }
 
     /* Toast */
     #toast { position: fixed; bottom: 24px; right: 24px; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.3s; z-index: 9999; pointer-events: none; max-width: 320px; }
@@ -81,11 +124,11 @@
 
     /* Books list */
     .books-list { display: flex; flex-direction: column; gap: 14px; }
-    .book-item { background: var(--white); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); padding: 16px; display: flex; gap: 16px; align-items: flex-start; }
+    .book-item { background: var(--card-bg); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border: 1px solid var(--border); padding: 16px; display: flex; gap: 16px; align-items: flex-start; }
     .book-cover { width: 60px; height: 80px; border-radius: 6px; object-fit: cover; background: var(--gray); flex-shrink: 0; border: 1px solid var(--border); }
     .book-cover.no-img { display: flex; align-items: center; justify-content: center; font-size: 22px; }
     .book-info { flex: 1; min-width: 0; }
-    .book-info h3 { font-size: 15px; font-weight: 700; color: var(--maroon-dark); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .book-info h3 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .book-info .author { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
     .book-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
     .tag-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: var(--maroon-light); color: var(--maroon); }
@@ -95,13 +138,13 @@
     .del-btn:hover { background: var(--red); color: #fff; }
     .copies-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-align: center; }
     .copies-badge.ok  { background: var(--green-bg); color: var(--green); }
-    .copies-badge.low { background: #fff4e5; color: #b85c00; }
+    .copies-badge.low { background: var(--orange-bg); color: var(--orange); }
     .copies-badge.out { background: var(--red-bg); color: var(--red); }
 
-    .empty-state { text-align: center; padding: 48px 20px; background: var(--white); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); color: var(--muted); font-size: 14px; }
+    .empty-state { text-align: center; padding: 48px 20px; background: var(--card-bg); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border: 1px solid var(--border); color: var(--muted); font-size: 14px; }
     .spinner { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-    .section-header h2 { font-size: 18px; font-weight: 700; color: var(--maroon-dark); }
+    .section-header h2 { font-size: 18px; font-weight: 700; color: var(--text); }
     .count-badge { background: var(--maroon); color: #fff; font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 20px; }
   </style>
 </head>
@@ -113,6 +156,7 @@
     <span>RAIT Smart Library — Admin</span>
   </div>
   <div class="nav-right">
+    <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle dark/light theme" aria-label="Toggle theme">🌙</button>
     <a href="/dashboard.html" class="nav-link">Dashboard</a>
     <button class="logout-btn" id="logoutBtn">Logout</button>
   </div>
@@ -192,12 +236,29 @@
     </div>
   </div>
 
-  <!-- RIGHT: Books List -->
+  <!-- RIGHT: Books List & Search/Filter -->
   <div>
     <div class="section-header">
       <h2>All Books</h2>
       <span class="count-badge" id="bookCount">0</span>
     </div>
+
+    <!-- Search & Filter UI -->
+    <div class="filter-toolbar">
+      <div class="search-input-wrap">
+        <input type="text" id="adminSearch" class="filter-input" placeholder="Search by title or author..." />
+      </div>
+      <div class="filter-dropdowns">
+        <select id="adminTagFilter" class="filter-select">
+          <option value="">All Genres / Subjects</option>
+        </select>
+        <select id="adminAvailFilter" class="filter-select">
+          <option value="">All Books</option>
+          <option value="true">Available Only</option>
+        </select>
+      </div>
+    </div>
+
     <div id="booksList">
       <div class="spinner">Loading books...</div>
     </div>
@@ -209,6 +270,7 @@
 
 <script>
 var TOKEN, USER;
+var adminSearchDebounceTimer = null;
 
 var TAGS = {
   lang:    ["C", "C++", "Java", "Python", "JavaScript"],
@@ -218,6 +280,36 @@ var TAGS = {
             "AI/ML", "Software Engineering", "Compiler Design",
             "Cryptography", "Cloud Computing", "Mobile Development"]
 };
+
+// ── Theme management ─────────────────────────────────────────────────────────
+function getCookie(name) {
+  var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : null;
+}
+
+function applyTheme(theme) {
+  if (theme === "dark") {
+    $("body").attr("data-theme", "dark");
+    document.documentElement.setAttribute("data-theme", "dark");
+    $("#themeToggleBtn").html("☀️");
+  } else {
+    $("body").removeAttr("data-theme");
+    document.documentElement.removeAttribute("data-theme");
+    $("#themeToggleBtn").html("🌙");
+  }
+  try { localStorage.setItem("theme", theme); } catch(e) {}
+  document.cookie = "theme=" + theme + "; path=/; max-age=31536000";
+}
+
+function initTheme() {
+  var saved = getCookie("theme") || localStorage.getItem("theme") || "light";
+  applyTheme(saved);
+
+  $("#themeToggleBtn").on("click", function () {
+    var cur = $("body").attr("data-theme") === "dark" || document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    applyTheme(cur);
+  });
+}
 
 function showToast(msg, type) {
   var $t = $("#toast");
@@ -263,15 +355,26 @@ $("#imageUrl").on("input", function () {
   }, 600);
 });
 
-// ── Load books ───────────────────────────────────────────────────────────────
+// ── Load books with Search & Filter ──────────────────────────────────────────
 function loadBooks() {
+  var search = $("#adminSearch").val() ? $("#adminSearch").val().trim() : "";
+  var tag    = $("#adminTagFilter").val() || "";
+  var avail  = $("#adminAvailFilter").val() || "";
+
+  var queryParams = [];
+  if (search) queryParams.push("search=" + encodeURIComponent(search));
+  if (tag)    queryParams.push("tags=" + encodeURIComponent(tag));
+  if (avail)  queryParams.push("available=" + encodeURIComponent(avail));
+
+  var url = "http://localhost:5000/api/books" + (queryParams.length ? "?" + queryParams.join("&") : "");
+
   $.ajax({
-    url: "http://localhost:5000/api/books",
+    url: url,
     headers: { Authorization: "Bearer " + TOKEN },
     success: function (books) {
       $("#bookCount").text(books.length);
       if (books.length === 0) {
-        $("#booksList").html('<div class="empty-state">No books added yet. Add your first book using the form.</div>');
+        $("#booksList").html('<div class="empty-state">No books match your criteria.</div>');
         return;
       }
 
@@ -285,8 +388,8 @@ function loadBooks() {
           return '<span class="tag-pill">' + $("<div>").text(t).html() + "</span>";
         }).join("");
 
-        var avail = book.availableCopies;
-        var total = book.totalCopies;
+        var avail = book.availableCopies !== undefined ? book.availableCopies : (book.quantity || 0);
+        var total = book.totalCopies !== undefined ? book.totalCopies : (book.quantity || 1);
         var copiesClass = avail === 0 ? "out" : avail <= 2 ? "low" : "ok";
         var copiesLabel = avail + "/" + total + " available";
 
@@ -294,7 +397,7 @@ function loadBooks() {
           coverHtml +
           '<div class="book-info">' +
             '<h3>' + $("<div>").text(book.title).html() + '</h3>' +
-            '<div class="author">by ' + $("<div>").text(book.author).html() + ' &bull; ' + book.publishingYear + '</div>' +
+            '<div class="author">by ' + $("<div>").text(book.author).html() + (book.publishingYear ? " &bull; " + book.publishingYear : "") + '</div>' +
             '<div class="book-tags">' + tagsHtml + '</div>' +
             '<div class="book-meta">ISBN: ' + (book.isbn || "—") + '</div>' +
           '</div>' +
@@ -344,8 +447,8 @@ $("#addBookForm").on("submit", function (e) {
   if (!year || year < 1000) { showToast("Enter a valid publishing year.", "error"); return; }
 
   var payload = {
-    title,
-    author,
+    title:           title,
+    author:          author,
     publishingYear:  year,
     imageUrl:        $("#imageUrl").val().trim() || null,
     tags:            getSelectedTags(),
@@ -380,6 +483,8 @@ $("#addBookForm").on("submit", function (e) {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 $(function () {
+  initTheme();
+
   TOKEN = localStorage.getItem("token");
   USER  = JSON.parse(localStorage.getItem("user") || "null");
 
@@ -393,6 +498,25 @@ $(function () {
   buildTags("langTags",    TAGS.lang);
   buildTags("yearTags",    TAGS.year);
   buildTags("subjectTags", TAGS.subject);
+
+  // Populate admin filter tags dropdown
+  var allFilterTags = TAGS.lang.concat(TAGS.subject);
+  allFilterTags.forEach(function (tag) {
+    $("#adminTagFilter").append($("<option>", { value: tag, text: tag }));
+  });
+
+  // Debounced search handler
+  $("#adminSearch").on("input", function () {
+    clearTimeout(adminSearchDebounceTimer);
+    adminSearchDebounceTimer = setTimeout(function () {
+      loadBooks();
+    }, 300);
+  });
+
+  // Filter change handlers
+  $("#adminTagFilter, #adminAvailFilter").on("change", function () {
+    loadBooks();
+  });
 
   $("#logoutBtn").on("click", function () {
     localStorage.removeItem("token");

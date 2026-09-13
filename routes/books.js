@@ -28,9 +28,15 @@ router.get("/", async (req, res) => {
       filter.availableCopies = { $gt: 0 };
     }
 
-    // Full-text search  e.g. ?search=head+first
+    // Search title or author  e.g. ?search=head+first
     if (req.query.search) {
-      filter.$text = { $search: req.query.search };
+      const queryStr = req.query.search.trim();
+      if (queryStr) {
+        filter.$or = [
+          { title:  { $regex: queryStr, $options: "i" } },
+          { author: { $regex: queryStr, $options: "i" } }
+        ];
+      }
     }
 
     const books = await Book.find(filter).sort({ createdAt: -1 });

@@ -3,15 +3,24 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
+const path           = require("path");
 const bookRoutes     = require("./routes/books");
 const authRoutes     = require("./routes/auth");
 const borrowRoutes   = require("./routes/borrows");
 const paymentRoutes  = require("./routes/payments");
+const { initReminderCron } = require("./services/reminderCron");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from public directory and project root
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname));
+
+// Initialize daily email reminder cron job
+initReminderCron();
 
 app.use("/api/books",    bookRoutes);
 app.use("/api/auth",     authRoutes);

@@ -6,8 +6,9 @@ const BorrowSchema = new mongoose.Schema({
   borrowDate: { type: Date, default: Date.now },
   dueDate:    { type: Date, required: true },   // borrowDate + 14 days
   returnDate: { type: Date, default: null },
-  fine:       { type: Number, default: 0 },     // ₹5 per overdue day
-  status:     { type: String, enum: ["active", "returned", "overdue"], default: "active" }
+  fine:         { type: Number, default: 0 },     // ₹5 per overdue day
+  status:       { type: String, enum: ["active", "returned", "overdue"], default: "active" },
+  reminderSent: { type: Boolean, default: false }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Borrow", BorrowSchema);
