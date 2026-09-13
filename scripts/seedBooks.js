@@ -4,15 +4,25 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 
+const dns = require("dns");
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch (e) {}
+
 const Book = require("../models/Book");
 
 const dataPath = path.join(__dirname, "../books_dataset_researched.json");
 
 async function seedBooks() {
   try {
-    // Connect to your existing MongoDB
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("✅ MongoDB connected");
+    let mongoUri = process.env.MONGO_URI;
+    if (mongoUri && !mongoUri.includes("/libraryDB")) {
+      mongoUri = mongoUri.replace(/\.mongodb\.net\/?(\?|$)/, ".mongodb.net/libraryDB$1");
+    }
+
+    // Connect to MongoDB Atlas
+    await mongoose.connect(mongoUri, { dbName: "libraryDB" });
+    console.log(`✅ MongoDB connected successfully to database: ${mongoose.connection.name}`);
 
     // Read dataset
     const books = JSON.parse(fs.readFileSync(dataPath, "utf-8"));

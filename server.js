@@ -29,10 +29,20 @@ app.use("/api/payments", paymentRoutes);
 
 const PORT = process.env.PORT || 5000;
 
+const dns = require("dns");
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch (e) {}
+
+let mongoUri = process.env.MONGO_URI;
+if (mongoUri && !mongoUri.includes("/libraryDB")) {
+  mongoUri = mongoUri.replace(/\.mongodb\.net\/?(\?|$)/, ".mongodb.net/libraryDB$1");
+}
+
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(mongoUri, { dbName: "libraryDB" })
   .then(() => {
-    console.log("MongoDB connected successfully");
+    console.log(`MongoDB connected successfully to database: ${mongoose.connection.name}`);
   })
   .catch((error) => {
     console.log("MongoDB connection error:", error);

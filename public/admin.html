@@ -64,8 +64,53 @@
     .nav-link:hover { background: rgba(255,255,255,0.12); color: #fff; }
     .logout-btn { background: transparent; border: 1.5px solid rgba(255,255,255,0.4); color: #fff; padding: 6px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit; font-weight: 600; }
     .logout-btn:hover { background: rgba(255,255,255,0.15); }
-    .theme-toggle-btn { background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.3); color: #ffffff; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: background 0.2s; }
-    .theme-toggle-btn:hover { background: rgba(255,255,255,0.25); }
+    /* Modern Theme Toggle Switch (No emoji, Pure SVG Icon) */
+    .theme-toggle-switch {
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.35);
+      border-radius: 20px;
+      width: 56px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 3px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .theme-toggle-switch .toggle-knob {
+      width: 22px;
+      height: 22px;
+      background: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      color: #333333;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    [data-theme="dark"] .theme-toggle-switch .toggle-knob {
+      transform: translateX(28px);
+      background: #9e2a2b;
+      color: #ffffff;
+    }
+    .toggle-knob svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    /* Borrower section */
+    .tab-nav { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+    .tab-btn { background: transparent; border: none; font-size: 15px; font-weight: 700; color: var(--muted); cursor: pointer; padding: 6px 14px; border-radius: 6px; font-family: inherit; transition: all 0.2s; }
+    .tab-btn.active { background: var(--maroon); color: #fff; }
+    .borrower-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 16px; }
+    .borrower-avatar { width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--maroon); object-fit: cover; background: var(--gray); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; font-size: 20px; }
+    .borrower-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .borrower-info { flex: 1; min-width: 0; }
+    .borrower-info h4 { font-size: 14px; font-weight: 700; color: var(--text); }
+    .borrower-info p { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
     /* Layout */
     .page { max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: 420px 1fr; gap: 28px; align-items: start; }
@@ -156,8 +201,15 @@
     <span>RAIT Smart Library — Admin</span>
   </div>
   <div class="nav-right">
-    <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle dark/light theme" aria-label="Toggle theme">🌙</button>
+    <button id="themeToggleBtn" class="theme-toggle-switch" title="Toggle dark/light theme" aria-label="Toggle theme">
+      <div class="toggle-knob">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </div>
+    </button>
     <a href="/dashboard.html" class="nav-link">Dashboard</a>
+    <a href="/profile.html" class="nav-link">My Profile</a>
     <button class="logout-btn" id="logoutBtn">Logout</button>
   </div>
 </nav>
@@ -236,32 +288,52 @@
     </div>
   </div>
 
-  <!-- RIGHT: Books List & Search/Filter -->
+  <!-- RIGHT: Tabs for Books List & Borrowers with Profile Avatars -->
   <div>
-    <div class="section-header">
-      <h2>All Books</h2>
-      <span class="count-badge" id="bookCount">0</span>
+    <div class="tab-nav">
+      <button class="tab-btn active" id="tabBooksBtn">📚 Manage Books</button>
+      <button class="tab-btn" id="tabBorrowersBtn">👥 Borrowers &amp; Users</button>
     </div>
 
-    <!-- Search & Filter UI -->
-    <div class="filter-toolbar">
-      <div class="search-input-wrap">
-        <input type="text" id="adminSearch" class="filter-input" placeholder="Search by title or author..." />
+    <!-- TAB 1: Books -->
+    <div id="tabBooksContent">
+      <div class="section-header">
+        <h2>All Books</h2>
+        <span class="count-badge" id="bookCount">0</span>
       </div>
-      <div class="filter-dropdowns">
-        <select id="adminTagFilter" class="filter-select">
-          <option value="">All Genres / Subjects</option>
-        </select>
-        <select id="adminAvailFilter" class="filter-select">
-          <option value="">All Books</option>
-          <option value="true">Available Only</option>
-        </select>
+
+      <!-- Search & Filter UI -->
+      <div class="filter-toolbar">
+        <div class="search-input-wrap">
+          <input type="text" id="adminSearch" class="filter-input" placeholder="Search by title or author..." />
+        </div>
+        <div class="filter-dropdowns">
+          <select id="adminTagFilter" class="filter-select">
+            <option value="">All Genres / Subjects</option>
+          </select>
+          <select id="adminAvailFilter" class="filter-select">
+            <option value="">All Books</option>
+            <option value="true">Available Only</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="booksList">
+        <div class="spinner">Loading books...</div>
       </div>
     </div>
 
-    <div id="booksList">
-      <div class="spinner">Loading books...</div>
+    <!-- TAB 2: Borrowers & Users -->
+    <div id="tabBorrowersContent" style="display:none;">
+      <div class="section-header">
+        <h2>Active Borrowers &amp; Registered Users</h2>
+        <span class="count-badge" id="borrowerCount">0</span>
+      </div>
+      <div id="borrowersList">
+        <div class="spinner">Loading borrowers and users...</div>
+      </div>
     </div>
+
   </div>
 
 </div>
@@ -281,6 +353,9 @@ var TAGS = {
             "Cryptography", "Cloud Computing", "Mobile Development"]
 };
 
+var SUN_ICON = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+var MOON_ICON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+
 // ── Theme management ─────────────────────────────────────────────────────────
 function getCookie(name) {
   var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -291,11 +366,11 @@ function applyTheme(theme) {
   if (theme === "dark") {
     $("body").attr("data-theme", "dark");
     document.documentElement.setAttribute("data-theme", "dark");
-    $("#themeToggleBtn").html("☀️");
+    $("#themeIcon").html(SUN_ICON);
   } else {
     $("body").removeAttr("data-theme");
     document.documentElement.removeAttribute("data-theme");
-    $("#themeToggleBtn").html("🌙");
+    $("#themeIcon").html(MOON_ICON);
   }
   try { localStorage.setItem("theme", theme); } catch(e) {}
   document.cookie = "theme=" + theme + "; path=/; max-age=31536000";
@@ -481,6 +556,48 @@ $("#addBookForm").on("submit", function (e) {
   });
 });
 
+// ── Load Borrowers and Users with Profile Avatars ────────────────────────────
+function loadBorrowers() {
+  $.ajax({
+    url: "http://localhost:5000/api/borrows/all",
+    headers: { Authorization: "Bearer " + TOKEN },
+    success: function (borrows) {
+      $("#borrowerCount").text(borrows.length);
+      if (borrows.length === 0) {
+        $("#borrowersList").html('<div class="empty-state">No borrow records found.</div>');
+        return;
+      }
+
+      var html = '<div style="display:flex;flex-direction:column;gap:12px;">';
+      borrows.forEach(function (b) {
+        var user = b.user || {};
+        var book = b.book || {};
+        var avatarHtml = user.profilePic
+          ? '<img src="' + user.profilePic + '" alt="avatar" />'
+          : '<span>👤</span>';
+
+        var statusClass = b.status === "returned" ? "ok" : b.status === "overdue" ? "out" : "low";
+        var statusLabel = b.status === "returned" ? "Returned" : b.status === "overdue" ? "Overdue" : "Active";
+
+        html += '<div class="borrower-card">' +
+          '<div class="borrower-avatar">' + avatarHtml + '</div>' +
+          '<div class="borrower-info">' +
+            '<h4>' + $("<div>").text(user.name || "Unknown User").html() + ' (' + $("<div>").text(user.idNumber || "No ID").html() + ')</h4>' +
+            '<p><strong>Email:</strong> ' + $("<div>").text(user.email || "—").html() + (user.phone ? ' &bull; <strong>Phone:</strong> ' + $("<div>").text(user.phone).html() : '') + '</p>' +
+            '<p><strong>Borrowed:</strong> "' + $("<div>").text(book.title || "Unknown Book").html() + '" &bull; Due: ' + new Date(b.dueDate).toLocaleDateString("en-IN") + '</p>' +
+          '</div>' +
+          '<div><span class="copies-badge ' + statusClass + '">' + statusLabel + '</span></div>' +
+        '</div>';
+      });
+      html += '</div>';
+      $("#borrowersList").html(html);
+    },
+    error: function () {
+      $("#borrowersList").html('<div class="empty-state">Could not load borrowers list.</div>');
+    }
+  });
+}
+
 // ── Init ─────────────────────────────────────────────────────────────────────
 $(function () {
   initTheme();
@@ -494,6 +611,23 @@ $(function () {
     window.location.href = "/dashboard.html";
     return;
   }
+
+  // Tab switcher
+  $("#tabBooksBtn").on("click", function () {
+    $(this).addClass("active");
+    $("#tabBorrowersBtn").removeClass("active");
+    $("#tabBooksContent").show();
+    $("#tabBorrowersContent").hide();
+    loadBooks();
+  });
+
+  $("#tabBorrowersBtn").on("click", function () {
+    $(this).addClass("active");
+    $("#tabBooksBtn").removeClass("active");
+    $("#tabBooksContent").hide();
+    $("#tabBorrowersContent").show();
+    loadBorrowers();
+  });
 
   buildTags("langTags",    TAGS.lang);
   buildTags("yearTags",    TAGS.year);

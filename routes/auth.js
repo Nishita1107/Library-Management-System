@@ -72,14 +72,77 @@ router.post("/login", async (req, res) => {
       message: "Login successful.",
       token,
       user: {
+        id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
-        idNumber: user.idNumber
+        idNumber: user.idNumber,
+        profilePic: user.profilePic || "",
+        phone: user.phone || "",
+        bio: user.bio || ""
       }
     });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
+  }
+});
+
+const authMiddleware = require("../middleware/auth");
+const adminAuthMiddleware = require("../middleware/adminAuth");
+
+// GET /api/auth/profile
+router.get("/profile", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found." });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// PUT /api/auth/profile
+router.put("/profile", authMiddleware, async (req, res) => {
+  try {
+    const { name, phone, bio, profilePic } = req.body;
+    const updateData = {};
+    if (name !== undefined) updateData.name = name.trim();
+    if (phone !== undefined) updateData.phone = phone.trim();
+    if (bio !== undefined) updateData.bio = bio.trim();
+    if (profilePic !== undefined) updateData.profilePic = profilePic;
+
+    const user = await User.findByIdAndUpdate(req.user.id, updateData, { new: true, runValidators: true }).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found." });
+
+    res.json({
+      message: "Profile updated successfully.",
+      user
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// GET /api/auth/users (Admin only)
+router.get("/users", adminAuthMiddleware, async (req, res) => {
+  try {
+    const users = await User.find().select("-password").sort({ createdAt: -1 });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// DELETE /api/auth/users/:id (Admin only)
+router.delete("/users/:id", adminAuthMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found." });
+    if (user.role === "admin") return res.status(403).json({ message: "Cannot delete an admin account." });
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: "User removed successfully." });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 

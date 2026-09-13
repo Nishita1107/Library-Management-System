@@ -145,27 +145,44 @@ body {
   display: block;
 }
 
-/* Theme toggle button */
-.theme-toggle-btn {
+/* Modern Theme Toggle Switch (No emoji, Pure SVG Icon) */
+.theme-toggle-switch {
   position: absolute;
   top: 20px;
   right: 24px;
   background: rgba(128, 128, 128, 0.15);
-  border: 1px solid var(--input-border);
-  color: var(--text-color);
+  border: 1.5px solid var(--input-border);
+  border-radius: 20px;
+  width: 56px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 3px;
+  cursor: pointer;
+  z-index: 100;
+  transition: background 0.2s, border-color 0.2s;
+}
+.theme-toggle-switch .toggle-knob {
+  width: 22px;
+  height: 22px;
+  background: #ffffff;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  cursor: pointer;
-  z-index: 100;
-  transition: all 0.2s;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #333333;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
-.theme-toggle-btn:hover {
-  background: rgba(128, 128, 128, 0.3);
+[data-theme="dark"] .theme-toggle-switch .toggle-knob {
+  transform: translateX(28px);
+  background: #b82b43;
+  color: #ffffff;
+}
+.toggle-knob svg {
+  width: 14px;
+  height: 14px;
+  display: block;
 }
 
 /* Password field with show/hide */
@@ -253,7 +270,13 @@ body {
   </div>
 
   <div class="form-panel">
-    <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle dark/light theme" aria-label="Toggle theme">🌙</button>
+    <button id="themeToggleBtn" class="theme-toggle-switch" title="Toggle dark/light theme" aria-label="Toggle theme">
+      <div class="toggle-knob">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </div>
+    </button>
 
     <div class="form-container">
 
@@ -295,6 +318,9 @@ body {
 </div>
 
 <script>
+var SUN_ICON = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+var MOON_ICON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+
 // ── Theme management ─────────────────────────────────────────────────────────
 function getCookie(name) {
   var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -305,11 +331,11 @@ function applyTheme(theme) {
   if (theme === "dark") {
     $("body").attr("data-theme", "dark");
     document.documentElement.setAttribute("data-theme", "dark");
-    $("#themeToggleBtn").html("☀️");
+    $("#themeIcon").html(SUN_ICON);
   } else {
     $("body").removeAttr("data-theme");
     document.documentElement.removeAttribute("data-theme");
-    $("#themeToggleBtn").html("🌙");
+    $("#themeIcon").html(MOON_ICON);
   }
   try { localStorage.setItem("theme", theme); } catch(e) {}
   document.cookie = "theme=" + theme + "; path=/; max-age=31536000";

@@ -134,6 +134,30 @@ router.get("/my", auth, async (req, res) => {
       const due    = new Date(b.dueDate);
       obj.fine     = b.status !== "returned" ? calcFine(b.dueDate) : b.fine;
       obj.dueSoon  = b.status === "active" && (due - now) / (1000 * 60 * 60 * 24) <= DUE_SOON_DAYS;
+      return obj;
+    });
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// ── GET /api/borrows/all  →  all borrows with borrower details (Admin) ──────
+const adminAuth = require("../middleware/adminAuth");
+router.get("/all", adminAuth, async (req, res) => {
+  try {
+    const borrows = await Borrow.find()
+      .populate("user", "name email idNumber role profilePic phone")
+      .populate("book", "title author imageUrl")
+      .sort({ createdAt: -1 });
+
+    const now = new Date();
+    const result = borrows.map(b => {
+      const obj = b.toObject();
+      const due = new Date(b.dueDate);
+      obj.fine = b.status !== "returned" ? calcFine(b.dueDate) : b.fine;
+      obj.dueSoon = b.status === "active" && (due - now) / (1000 * 60 * 60 * 24) <= DUE_SOON_DAYS;
       if (b.status === "active" && due < now) obj.status = "overdue";
       return obj;
     });

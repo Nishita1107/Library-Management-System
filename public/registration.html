@@ -146,26 +146,46 @@
     border-color: var(--maroon);
   }
 
-  .theme-toggle-btn {
+  .theme-toggle-switch {
     position: absolute;
     top: 20px;
     right: 24px;
-    background: rgba(128, 128, 128, 0.15);
+    background: rgba(128,128,128,0.25);
     border: 1px solid var(--input-border);
-    color: var(--text-color);
+    border-radius: 999px;
+    width: 56px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    cursor: pointer;
+    z-index: 100;
+    transition: background 0.3s;
+    box-sizing: border-box;
+  }
+  .theme-toggle-switch:hover { background: rgba(128,128,128,0.4); }
+  .toggle-knob {
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    cursor: pointer;
-    z-index: 100;
-    transition: all 0.2s;
+    transition: transform 0.3s;
+    flex-shrink: 0;
   }
-  .theme-toggle-btn:hover {
-    background: rgba(128, 128, 128, 0.3);
+  .toggle-knob svg {
+    width: 14px;
+    height: 14px;
+    stroke: #555;
+  }
+  [data-theme="dark"] .theme-toggle-switch .toggle-knob {
+    transform: translateX(28px);
+    background: #9e2a2b;
+  }
+  [data-theme="dark"] .theme-toggle-switch .toggle-knob svg {
+    stroke: #fff;
   }
  
   .field input.error,
@@ -384,7 +404,13 @@
   </div>
  
   <div class="form-panel">
-    <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle dark/light theme" aria-label="Toggle theme">🌙</button>
+    <button id="themeToggleBtn" class="theme-toggle-switch" title="Toggle dark/light theme" aria-label="Toggle theme">
+      <div class="toggle-knob">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </div>
+    </button>
     <div class="form-container">
  
       <div class="mobile-brand">
@@ -483,15 +509,18 @@ function getCookie(name) {
   return match ? match[2] : null;
 }
 
+var SUN_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+var MOON_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+
 function applyTheme(theme) {
   if (theme === "dark") {
     $("body").attr("data-theme", "dark");
     document.documentElement.setAttribute("data-theme", "dark");
-    $("#themeToggleBtn").html("☀️");
+    $("#themeIcon").html(SUN_ICON);
   } else {
     $("body").removeAttr("data-theme");
     document.documentElement.removeAttribute("data-theme");
-    $("#themeToggleBtn").html("🌙");
+    $("#themeIcon").html(MOON_ICON);
   }
   try { localStorage.setItem("theme", theme); } catch(e) {}
   document.cookie = "theme=" + theme + "; path=/; max-age=31536000";
