@@ -1,0 +1,1173 @@
+[
+  {
+    "bookId": "BOOK-001",
+    "title": "Fundamentals of Software Engineering",
+    "author": "Rajib Mall",
+    "publishingYear": 2018,
+    "tags": [
+      "Software Engineering",
+      "1st Year",
+      "2nd Year"
+    ],
+    "copies": 7,
+    "coverFile": "001-fundamentals-of-software-engineering.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 1,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-002",
+    "title": "Software Engineering at Google",
+    "author": "Titus Winters; Tom Manshreck; Hyrum Wright",
+    "publishingYear": 2020,
+    "tags": [
+      "Software Engineering",
+      "Programming",
+      "Reference"
+    ],
+    "copies": 7,
+    "coverFile": "002-software-engineering-at-google.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 2,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-003",
+    "title": "Algorithm Design",
+    "author": "Michael T. Goodrich; Roberto Tamassia",
+    "publishingYear": null,
+    "tags": [
+      "Algorithms",
+      "Data Structures",
+      "Computer Science"
+    ],
+    "copies": 3,
+    "coverFile": "003-algorithm-design.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 3
+  },
+  {
+    "bookId": "BOOK-004",
+    "title": "Genetic Algorithms for VLSI Design, Layout & Test Automation",
+    "author": "Pinaki Mazumder; Elizabeth M. Rudnick",
+    "publishingYear": null,
+    "tags": [
+      "Genetic Algorithms",
+      "VLSI",
+      "Computer Engineering"
+    ],
+    "copies": 7,
+    "coverFile": "004-genetic-algorithms-for-vlsi-design-layout-test-automation.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 4
+  },
+  {
+    "bookId": "BOOK-005",
+    "title": "Introduction to Algorithms",
+    "author": "Thomas H. Cormen; Charles E. Leiserson; Ronald L. Rivest; Clifford Stein",
+    "publishingYear": 2022,
+    "tags": [
+      "Algorithms",
+      "Data Structures",
+      "Computer Science"
+    ],
+    "copies": 7,
+    "coverFile": "005-introduction-to-algorithms.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 5,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-006",
+    "title": "Design Methods and Analysis of Algorithms",
+    "author": "S. K. Basu",
+    "publishingYear": 2005,
+    "tags": [
+      "Algorithms",
+      "Computer Science"
+    ],
+    "copies": 7,
+    "coverFile": "006-design-methods-and-analysis-of-algorithms.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 6,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-007",
+    "title": "AI and Machine Learning for Coders",
+    "author": "Laurence Moroney",
+    "publishingYear": 2020,
+    "tags": [
+      "AI/ML",
+      "Machine Learning",
+      "Programming"
+    ],
+    "copies": 7,
+    "coverFile": "007-ai-and-machine-learning-for-coders.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 7,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-008",
+    "title": "Pro MEAN Stack Development",
+    "author": "Elad Elrom",
+    "publishingYear": 2016,
+    "tags": [
+      "JavaScript",
+      "Node.js",
+      "Web Development",
+      "Full Stack"
+    ],
+    "copies": 1,
+    "coverFile": "008-pro-mean-stack-development.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 8,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-009",
+    "title": "React: Up & Running",
+    "author": "Stoyan Stefanov",
+    "publishingYear": 2016,
+    "tags": [
+      "JavaScript",
+      "React",
+      "Web Development"
+    ],
+    "copies": 4,
+    "coverFile": "009-react-up-running.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 9,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-010",
+    "title": "Blockchain and DLT",
+    "author": "Nakul Shah",
+    "publishingYear": null,
+    "tags": [
+      "Blockchain",
+      "Web3",
+      "Distributed Systems"
+    ],
+    "copies": 1,
+    "coverFile": "010-blockchain-and-dlt.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 10
+  },
+  {
+    "bookId": "BOOK-011",
+    "title": "Blockchain Essentials",
+    "author": "Ramchandra Sharad Mangrulkar; Pallavi Vijay Chavan",
+    "publishingYear": 2024,
+    "tags": [
+      "Blockchain",
+      "Distributed Systems",
+      "Web3"
+    ],
+    "copies": 1,
+    "coverFile": "011-blockchain-essentials.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 11,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-012",
+    "title": "Mastering Bitcoin",
+    "author": "Andreas M. Antonopoulos",
+    "publishingYear": 2017,
+    "tags": [
+      "Blockchain",
+      "Bitcoin",
+      "Cryptocurrency"
+    ],
+    "copies": 1,
+    "coverFile": "012-mastering-bitcoin.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 12,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-013",
+    "title": "Machine Learning",
+    "author": "Anuradha Srinivasaraghavan; Vincy Joseph",
+    "publishingYear": 2019,
+    "tags": [
+      "AI/ML",
+      "Machine Learning"
+    ],
+    "copies": 7,
+    "coverFile": "013-machine-learning.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 13,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-014",
+    "title": "Machine Learning",
+    "author": "Saikat Dutt; Subramanian Chandramouli; Amit Kumar Das",
+    "publishingYear": null,
+    "tags": [
+      "AI/ML",
+      "Machine Learning"
+    ],
+    "copies": 7,
+    "coverFile": "014-machine-learning.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 14
+  },
+  {
+    "bookId": "BOOK-015",
+    "title": "Data Communication Networks",
+    "author": "Alberto Leon-Garcia; Indra Widjaja",
+    "publishingYear": null,
+    "tags": [
+      "Computer Networks",
+      "Data Communication"
+    ],
+    "copies": 1,
+    "coverFile": "015-data-communication-networks.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 15
+  },
+  {
+    "bookId": "BOOK-016",
+    "title": "Discrete-Event System Simulation",
+    "author": "Jerry Banks; John S. Carson II; Barry L. Nelson; David M. Nicol",
+    "publishingYear": 2010,
+    "tags": [
+      "Simulation",
+      "Operations Research",
+      "Computer Science"
+    ],
+    "copies": 2,
+    "coverFile": "016-discrete-event-system-simulation.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 16,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-017",
+    "title": "Digital Evidence and Computer Crime",
+    "author": "Eoghan Casey",
+    "publishingYear": null,
+    "tags": [
+      "Cybersecurity",
+      "Digital Forensics"
+    ],
+    "copies": 4,
+    "coverFile": "017-digital-evidence-and-computer-crime.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 17
+  },
+  {
+    "bookId": "BOOK-018",
+    "title": "Digital Forensics",
+    "author": "Dr. Madhumita Chatterjee; Dr. Sangita Chaudhari",
+    "publishingYear": null,
+    "tags": [
+      "Cybersecurity",
+      "Digital Forensics"
+    ],
+    "copies": 2,
+    "coverFile": "018-digital-forensics.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 18
+  },
+  {
+    "bookId": "BOOK-019",
+    "title": "Network Security: Private Communication in a Public World",
+    "author": null,
+    "publishingYear": null,
+    "tags": [
+      "Cybersecurity",
+      "Network Security"
+    ],
+    "copies": 4,
+    "coverFile": "019-network-security-private-communication-in-a-public-world.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 19
+  },
+  {
+    "bookId": "BOOK-020",
+    "title": "Internet of Things",
+    "author": "Shriram K. Vasudevan; Abhishek S. Nagarajan; RMD Sundaram",
+    "publishingYear": 2019,
+    "tags": [
+      "IoT",
+      "Embedded Systems"
+    ],
+    "copies": 3,
+    "coverFile": "020-internet-of-things.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 20,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-021",
+    "title": "Real-World Machine Learning",
+    "author": "Henrik Brink; Joseph W. Richards; Mark Fetherolf",
+    "publishingYear": null,
+    "tags": [
+      "AI/ML",
+      "Machine Learning"
+    ],
+    "copies": 7,
+    "coverFile": "021-real-world-machine-learning.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 21
+  },
+  {
+    "bookId": "BOOK-022",
+    "title": "Arduino Projects for Engineers",
+    "author": "Neerparaj Rai",
+    "publishingYear": null,
+    "tags": [
+      "Arduino",
+      "Embedded Systems",
+      "IoT"
+    ],
+    "copies": 2,
+    "coverFile": "022-arduino-projects-for-engineers.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 22
+  },
+  {
+    "bookId": "BOOK-023",
+    "title": "Introducing Software Testing",
+    "author": "Louise Tamres",
+    "publishingYear": 2002,
+    "tags": [
+      "Software Testing",
+      "Software Engineering"
+    ],
+    "copies": 4,
+    "coverFile": "023-introducing-software-testing.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 23,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-024",
+    "title": "Cyber: The Key to Digital Security, How It Works, and Why It Matters",
+    "author": "Keith Martin",
+    "publishingYear": null,
+    "tags": [
+      "Cybersecurity",
+      "Information Security"
+    ],
+    "copies": 3,
+    "coverFile": "024-cyber-the-key-to-digital-security-how-it-works-and-why-it-matters.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 24
+  },
+  {
+    "bookId": "BOOK-025",
+    "title": "Mastering Cloud Computing",
+    "author": "Rajkumar Buyya; Christian Vecchiola; S. Thamarai Selvi",
+    "publishingYear": 2013,
+    "tags": [
+      "Cloud Computing",
+      "Distributed Systems"
+    ],
+    "copies": 3,
+    "coverFile": "025-mastering-cloud-computing.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 25,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-026",
+    "title": "Modern Digital Electronics",
+    "author": "R. P. Jain",
+    "publishingYear": 2010,
+    "tags": [
+      "Digital Electronics",
+      "Electronics"
+    ],
+    "copies": 2,
+    "coverFile": "026-modern-digital-electronics.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 26,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-027",
+    "title": "Code Factory: Navigating the Wonders Beyond Binary Brilliance",
+    "author": "Shikha Jain; Kavita Pandey",
+    "publishingYear": null,
+    "tags": [
+      "Programming",
+      "Python",
+      "C"
+    ],
+    "copies": 2,
+    "coverFile": "027-code-factory-navigating-the-wonders-beyond-binary-brilliance.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 27
+  },
+  {
+    "bookId": "BOOK-028",
+    "title": "Theory, Languages, and Computation",
+    "author": "John E. Hopcroft; Rajeev Motwani; Jeffrey D. Ullman",
+    "publishingYear": null,
+    "tags": [
+      "Theory of Computation",
+      "Computer Science"
+    ],
+    "copies": 3,
+    "coverFile": "028-theory-languages-and-computation.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 28
+  },
+  {
+    "bookId": "BOOK-029",
+    "title": "1 Hour Web Site",
+    "author": "Michael Utvich; Ken Milhous; Yana Beylinson",
+    "publishingYear": null,
+    "tags": [
+      "Web Development",
+      "HTML",
+      "CSS"
+    ],
+    "copies": 1,
+    "coverFile": "029-1-hour-web-site.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 29
+  },
+  {
+    "bookId": "BOOK-030",
+    "title": "Modern Full-Stack Development",
+    "author": "Frank Zammetti",
+    "publishingYear": 2020,
+    "tags": [
+      "Full Stack",
+      "TypeScript",
+      "React",
+      "Node.js",
+      "Web Development"
+    ],
+    "copies": 1,
+    "coverFile": "030-modern-full-stack-development.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 30,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-031",
+    "title": "Professional Web 2.0 Programming",
+    "author": "Eric van der Vlist; Danny Ayers; Erik Bruchez; Joe Fawcett; Alessandro Vernet",
+    "publishingYear": 2007,
+    "tags": [
+      "Web Development",
+      "JavaScript",
+      "CSS",
+      "AJAX"
+    ],
+    "copies": 4,
+    "coverFile": "031-professional-web-2-0-programming.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 31,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-032",
+    "title": "Virtual Reality Technology",
+    "author": "Grigore C. Burdea; Philippe Coiffet",
+    "publishingYear": null,
+    "tags": [
+      "Virtual Reality",
+      "Computer Graphics"
+    ],
+    "copies": 1,
+    "coverFile": "032-virtual-reality-technology.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 32
+  },
+  {
+    "bookId": "BOOK-033",
+    "title": "VLSI Analog Circuits: Algorithms, Architecture, Modeling, and Circuit Implementation",
+    "author": "Hongjiang Song",
+    "publishingYear": null,
+    "tags": [
+      "VLSI",
+      "Analog Electronics"
+    ],
+    "copies": 8,
+    "coverFile": "033-vlsi-analog-circuits-algorithms-architecture-modeling-and-circuit-impl.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 33
+  },
+  {
+    "bookId": "BOOK-034",
+    "title": "CMOS Digital Integrated Circuits: Analysis and Design",
+    "author": "Sung-Mo Kang; Yusuf Leblebici",
+    "publishingYear": 2002,
+    "tags": [
+      "VLSI",
+      "Digital Electronics"
+    ],
+    "copies": 3,
+    "coverFile": "034-cmos-digital-integrated-circuits-analysis-and-design.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 34,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-035",
+    "title": "Electronic Circuits: Analysis and Design",
+    "author": "Donald A. Neamen",
+    "publishingYear": null,
+    "tags": [
+      "Electronics",
+      "Electronic Circuits"
+    ],
+    "copies": 3,
+    "coverFile": "035-electronic-circuits-analysis-and-design.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 35
+  },
+  {
+    "bookId": "BOOK-036",
+    "title": "Human Resource Management",
+    "author": "Gary Dessler; Biju Varkkey",
+    "publishingYear": 2020,
+    "tags": [
+      "Human Resources",
+      "Management"
+    ],
+    "copies": 1,
+    "coverFile": "036-human-resource-management.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 36,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-037",
+    "title": "Human Resource Management: Text and Cases",
+    "author": "K. Aswathappa",
+    "publishingYear": 2013,
+    "tags": [
+      "Human Resources",
+      "Management"
+    ],
+    "copies": 4,
+    "coverFile": "037-human-resource-management-text-and-cases.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 37,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-038",
+    "title": "Speech and Audio Signal Processing: Processing and Perception of Speech and Music",
+    "author": "Ben Gold; Nelson Morgan",
+    "publishingYear": null,
+    "tags": [
+      "Signal Processing",
+      "Audio Processing"
+    ],
+    "copies": 1,
+    "coverFile": "038-speech-and-audio-signal-processing-processing-and-perception-of-speech.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 38
+  },
+  {
+    "bookId": "BOOK-039",
+    "title": "Signals and Systems",
+    "author": "A. Nagoor Kani",
+    "publishingYear": 2010,
+    "tags": [
+      "Signals and Systems",
+      "Signal Processing"
+    ],
+    "copies": 8,
+    "coverFile": "039-signals-and-systems.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 39,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-040",
+    "title": "Wiley Acing the GATE: Computer Science and Information Technology",
+    "author": "Anil Kumar Verma; Gaurav Sharma; Kuldeep Singh",
+    "publishingYear": 2018,
+    "tags": [
+      "GATE",
+      "Computer Science",
+      "Competitive Exams"
+    ],
+    "copies": 1,
+    "coverFile": "040-wiley-acing-the-gate-computer-science-and-information-technology.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 40
+  },
+  {
+    "bookId": "BOOK-041",
+    "title": "How to Prepare for Logical Reasoning for CAT",
+    "author": "Arun Sharma",
+    "publishingYear": null,
+    "tags": [
+      "CAT",
+      "Logical Reasoning",
+      "Competitive Exams"
+    ],
+    "copies": 3,
+    "coverFile": "041-how-to-prepare-for-logical-reasoning-for-cat.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 41
+  },
+  {
+    "bookId": "BOOK-042",
+    "title": "The Official Guide to the GRE General Test",
+    "author": null,
+    "publishingYear": null,
+    "tags": [
+      "GRE",
+      "Competitive Exams"
+    ],
+    "copies": 2,
+    "coverFile": "042-the-official-guide-to-the-gre-general-test.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 42
+  },
+  {
+    "bookId": "BOOK-043",
+    "title": "General Knowledge for Competitive Examinations",
+    "author": "Harsh Gagrani; Abhishek Dubey",
+    "publishingYear": null,
+    "tags": [
+      "General Knowledge",
+      "Competitive Exams"
+    ],
+    "copies": 3,
+    "coverFile": "043-general-knowledge-for-competitive-examinations.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 43
+  },
+  {
+    "bookId": "BOOK-044",
+    "title": "Quantitative Aptitude for Competitive Examinations",
+    "author": "R. S. Aggarwal",
+    "publishingYear": null,
+    "tags": [
+      "Quantitative Aptitude",
+      "Competitive Exams"
+    ],
+    "copies": 8,
+    "coverFile": "044-quantitative-aptitude-for-competitive-examinations.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 44
+  },
+  {
+    "bookId": "BOOK-045",
+    "title": "PlaceMentor: Tests of Aptitude for Placement Readiness",
+    "author": "Archana Ram",
+    "publishingYear": null,
+    "tags": [
+      "Aptitude",
+      "Placement",
+      "Competitive Exams"
+    ],
+    "copies": 3,
+    "coverFile": "045-placementor-tests-of-aptitude-for-placement-readiness.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 45
+  },
+  {
+    "bookId": "BOOK-046",
+    "title": "Technical Aptitude for Interviews: Computer Science and IT",
+    "author": "Ela Kashyap Sharma",
+    "publishingYear": 2016,
+    "tags": [
+      "Technical Aptitude",
+      "Computer Science",
+      "Placement"
+    ],
+    "copies": 1,
+    "coverFile": "046-technical-aptitude-for-interviews-computer-science-and-it.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 46,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-047",
+    "title": "IBPS Common Written Examination: Recruitment of Bank Probationary Officers / Management Trainees",
+    "author": null,
+    "publishingYear": null,
+    "tags": [
+      "IBPS",
+      "Banking",
+      "Competitive Exams"
+    ],
+    "copies": 3,
+    "coverFile": "047-ibps-common-written-examination-recruitment-of-bank-probationary-offic.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 47
+  },
+  {
+    "bookId": "BOOK-048",
+    "title": "Core Java: An Integrated Approach",
+    "author": "Dr. R. Nageswara Rao",
+    "publishingYear": 2016,
+    "tags": [
+      "Java",
+      "Programming",
+      "OOP"
+    ],
+    "copies": 7,
+    "coverFile": "048-core-java-an-integrated-approach.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 48,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-049",
+    "title": "Professional Java User Interfaces",
+    "author": "Mauro Marinilli",
+    "publishingYear": 2006,
+    "tags": [
+      "Java",
+      "GUI",
+      "Programming"
+    ],
+    "copies": 7,
+    "coverFile": "049-professional-java-user-interfaces.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 49,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-050",
+    "title": "Java Programming",
+    "author": "Hari Mohan Pandey",
+    "publishingYear": 2012,
+    "tags": [
+      "Java",
+      "Programming",
+      "OOP"
+    ],
+    "copies": 7,
+    "coverFile": "050-java-programming.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 50,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-051",
+    "title": "Java: How to Program",
+    "author": "Paul J. Deitel; Harvey Deitel",
+    "publishingYear": 2004,
+    "tags": [
+      "Java",
+      "Programming",
+      "OOP"
+    ],
+    "copies": 8,
+    "coverFile": "051-java-how-to-program.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 51,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-052",
+    "title": "The 8086/8088 Family: Design, Programming, and Interfacing",
+    "author": "John Uffenbeck",
+    "publishingYear": 1986,
+    "tags": [
+      "Microprocessors",
+      "8086",
+      "Embedded Systems"
+    ],
+    "copies": 1,
+    "coverFile": "052-the-8086-8088-family-design-programming-and-interfacing.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 52,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-053",
+    "title": "Schaum's Outline of Data Structures",
+    "author": "Seymour Lipschutz; adapted by G. A. Pai",
+    "publishingYear": null,
+    "tags": [
+      "Data Structures",
+      "Algorithms"
+    ],
+    "copies": 7,
+    "coverFile": "053-schaum-s-outline-of-data-structures.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 53
+  },
+  {
+    "bookId": "BOOK-054",
+    "title": "Data Structures Using C",
+    "author": "Rema Thareja",
+    "publishingYear": null,
+    "tags": [
+      "C",
+      "Data Structures",
+      "Programming"
+    ],
+    "copies": 7,
+    "coverFile": "054-data-structures-using-c.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books 1.pdf",
+    "sourcePage": 54
+  },
+  {
+    "bookId": "BOOK-055",
+    "title": "Discrete Mathematics",
+    "author": "Dr. Deepankar Sharma",
+    "publishingYear": null,
+    "tags": [
+      "Discrete Mathematics",
+      "1st Year",
+      "Mathematics"
+    ],
+    "copies": 8,
+    "coverFile": "055-discrete-mathematics.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 1
+  },
+  {
+    "bookId": "BOOK-056",
+    "title": "Engineering Mechanics",
+    "author": "M. D. Dayal",
+    "publishingYear": 2018,
+    "tags": [
+      "Engineering Mechanics",
+      "1st Year",
+      "Engineering"
+    ],
+    "copies": 8,
+    "coverFile": "056-engineering-mechanics.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 2
+  },
+  {
+    "bookId": "BOOK-057",
+    "title": "Communication Skills",
+    "author": "Dr. Arpita Palchoudhury; Madhuvanti A. Date; Nuzhat N. Khan",
+    "publishingYear": null,
+    "tags": [
+      "Communication Skills",
+      "1st Year",
+      "Soft Skills"
+    ],
+    "copies": 8,
+    "coverFile": "057-communication-skills.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 3
+  },
+  {
+    "bookId": "BOOK-058",
+    "title": "Programming in C",
+    "author": "Pradip Dey; Manas Ghosh",
+    "publishingYear": null,
+    "tags": [
+      "C",
+      "Programming",
+      "1st Year"
+    ],
+    "copies": 3,
+    "coverFile": "058-programming-in-c.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 4
+  },
+  {
+    "bookId": "BOOK-059",
+    "title": "Basic Electrical Engineering",
+    "author": "Ravish R. Singh",
+    "publishingYear": null,
+    "tags": [
+      "Basic Electrical Engineering",
+      "1st Year",
+      "Electrical"
+    ],
+    "copies": 7,
+    "coverFile": "059-basic-electrical-engineering.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 5
+  },
+  {
+    "bookId": "BOOK-060",
+    "title": "Applied Physics-II",
+    "author": "Dr. Swati Bawra",
+    "publishingYear": null,
+    "tags": [
+      "Applied Physics",
+      "2nd Year",
+      "Physics"
+    ],
+    "copies": 8,
+    "coverFile": "060-applied-physics-ii.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 6
+  },
+  {
+    "bookId": "BOOK-061",
+    "title": "Applied Chemistry-I",
+    "author": "Dr. Mrs. Trupti S. Paradkar",
+    "publishingYear": null,
+    "tags": [
+      "Applied Chemistry",
+      "1st Year",
+      "Chemistry"
+    ],
+    "copies": 8,
+    "coverFile": "061-applied-chemistry-i.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 7
+  },
+  {
+    "bookId": "BOOK-062",
+    "title": "Robotics: Fundamental Concepts and Analysis",
+    "author": "Ashitava Ghosal",
+    "publishingYear": null,
+    "tags": [
+      "Robotics",
+      "Automation",
+      "Embedded Systems"
+    ],
+    "copies": 2,
+    "coverFile": "062-robotics-fundamental-concepts-and-analysis.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 8
+  },
+  {
+    "bookId": "BOOK-063",
+    "title": "Control Systems Engineering",
+    "author": "I. J. Nagrath; M. Gopal",
+    "publishingYear": null,
+    "tags": [
+      "Control Systems",
+      "Engineering"
+    ],
+    "copies": 3,
+    "coverFile": "063-control-systems-engineering.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 9
+  },
+  {
+    "bookId": "BOOK-064",
+    "title": "Fiber Optic Communications",
+    "author": "Joseph C. Palais",
+    "publishingYear": 2003,
+    "tags": [
+      "Fiber Optics",
+      "Communication Systems"
+    ],
+    "copies": 1,
+    "coverFile": "064-fiber-optic-communications.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 10,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-065",
+    "title": "Trishna's GATE Series: Computer Science and Information Technology",
+    "author": null,
+    "publishingYear": 2018,
+    "tags": [
+      "GATE",
+      "Computer Science",
+      "Competitive Exams"
+    ],
+    "copies": 3,
+    "coverFile": "065-trishna-s-gate-series-computer-science-and-information-technology.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 11
+  },
+  {
+    "bookId": "BOOK-066",
+    "title": "Wiley Acing the GATE: Computer Science and Information Technology",
+    "author": "Anil Kumar Verma; Gaurav Sharma; Kuldeep Singh",
+    "publishingYear": 2018,
+    "tags": [
+      "GATE",
+      "Computer Science",
+      "Competitive Exams"
+    ],
+    "copies": 3,
+    "coverFile": "066-wiley-acing-the-gate-computer-science-and-information-technology.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 12
+  },
+  {
+    "bookId": "BOOK-067",
+    "title": "Let Us C++",
+    "author": "Yashavant Kanetkar",
+    "publishingYear": null,
+    "tags": [
+      "C++",
+      "Programming",
+      "OOP"
+    ],
+    "copies": 2,
+    "coverFile": "067-let-us-c.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 13
+  },
+  {
+    "bookId": "BOOK-068",
+    "title": "Programming in ANSI C",
+    "author": "E. Balagurusamy",
+    "publishingYear": 2017,
+    "tags": [
+      "C",
+      "Programming"
+    ],
+    "copies": 2,
+    "coverFile": "068-programming-in-ansi-c.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 14,
+    "yearSource": "web-researched; edition/year may differ from physical copy if cover edition is different"
+  },
+  {
+    "bookId": "BOOK-069",
+    "title": "Let Us C: Authentic Guide to C Programming Language",
+    "author": "Yashavant Kanetkar",
+    "publishingYear": null,
+    "tags": [
+      "C",
+      "Programming"
+    ],
+    "copies": 7,
+    "coverFile": "069-let-us-c-authentic-guide-to-c-programming-language.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 15
+  },
+  {
+    "bookId": "BOOK-070",
+    "title": "C++ and Object-Oriented Programming Paradigm",
+    "author": "Debasish Jana",
+    "publishingYear": null,
+    "tags": [
+      "C++",
+      "OOP",
+      "Programming"
+    ],
+    "copies": 4,
+    "coverFile": "070-c-and-object-oriented-programming-paradigm.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 16
+  },
+  {
+    "bookId": "BOOK-071",
+    "title": "Let Us Python",
+    "author": "Yashavant Kanetkar; Aditya Kanetkar",
+    "publishingYear": null,
+    "tags": [
+      "Python",
+      "Programming",
+      "OOP"
+    ],
+    "copies": 4,
+    "coverFile": "071-let-us-python.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 17
+  },
+  {
+    "bookId": "BOOK-072",
+    "title": "HTML and CSS: The Comprehensive Guide",
+    "author": "Jürgen Wolf",
+    "publishingYear": null,
+    "tags": [
+      "HTML",
+      "CSS",
+      "Web Development"
+    ],
+    "copies": 3,
+    "coverFile": "072-html-and-css-the-comprehensive-guide.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 18
+  },
+  {
+    "bookId": "BOOK-073",
+    "title": "Practical Linux DevOps: Building a Linux Lab for Modern Software Development",
+    "author": null,
+    "publishingYear": null,
+    "tags": [
+      "Linux",
+      "DevOps",
+      "System Administration"
+    ],
+    "copies": 2,
+    "coverFile": "073-practical-linux-devops-building-a-linux-lab-for-modern-software-develo.jpg",
+    "imageUrl": null,
+    "sourcePdf": "books.pdf",
+    "sourcePage": 19
+  }
+]

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — RAIT Smart Library</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <style>
+    :root {
+      --maroon: #800000;
+      --maroon-dark: #2a1414;
+      --maroon-light: #fdf5f5;
+      --white: #ffffff;
+      --gray: #f4f4f4;
+      --text: #222;
+      --muted: #666;
+      --green: #1a7a1a;
+      --green-bg: #edfaed;
+      --orange: #b85c00;
+      --orange-bg: #fff4e5;
+      --red: #c00;
+      --red-bg: #ffeaea;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system,"Segoe UI",Helvetica,Arial,sans-serif; background: var(--gray); color: var(--text); }
+
+    /* Navbar */
+    .navbar { background: var(--maroon-dark); color: var(--white); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; height: 60px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-brand img { height: 38px; width: auto; }
+    .nav-brand span { font-size: 15px; font-weight: 700; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .user-pill { background: rgba(255,255,255,0.12); border-radius: 20px; padding: 5px 14px; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+    .role-badge { background: var(--maroon); border-radius: 10px; padding: 2px 8px; font-size: 11px; text-transform: capitalize; font-weight: 600; }
+    .logout-btn { background: transparent; border: 1.5px solid rgba(255,255,255,0.4); color: var(--white); padding: 6px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit; font-weight: 600; }
+    .logout-btn:hover { background: rgba(255,255,255,0.15); }
+
+    /* Layout */
+    .page { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+    /* Welcome */
+    .welcome-card { background: var(--maroon); color: var(--white); border-radius: 14px; padding: 28px 32px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .welcome-card h1 { font-size: 22px; font-weight: 700; }
+    .welcome-stats { display: flex; gap: 28px; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 28px; font-weight: 800; }
+    .stat-label { font-size: 12px; opacity: 0.8; }
+
+    /* Stat cards */
+    .cards-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .info-card { background: var(--white); border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+    .info-card .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 8px; }
+    .info-card .value { font-size: 24px; font-weight: 800; color: var(--maroon); }
+
+    /* Section */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .section-header h2 { font-size: 18px; font-weight: 700; color: var(--maroon-dark); }
+
+    /* Books grid */
+    .books-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .book-card { background: var(--white); border-radius: 12px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-left: 4px solid var(--maroon); display: flex; flex-direction: column; gap: 8px; }
+    .book-title { font-size: 15px; font-weight: 700; color: var(--maroon-dark); }
+    .book-author { font-size: 13px; color: var(--muted); }
+    .book-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+    .qty-badge { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: var(--green-bg); color: var(--green); }
+    .qty-badge.out { background: var(--red-bg); color: var(--red); }
+    .borrow-btn { font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 6px; border: none; cursor: pointer; background: var(--maroon); color: var(--white); font-family: inherit; transition: opacity 0.2s; }
+    .borrow-btn:hover:not(:disabled) { opacity: 0.85; }
+    .borrow-btn:disabled { background: #ccc; cursor: not-allowed; }
+    .borrow-btn.borrowed { background: var(--green-bg); color: var(--green); border: 1.5px solid var(--green); }
+
+    /* Borrowed books table */
+    .borrow-table-wrap { background: var(--white); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; margin-bottom: 32px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead { background: var(--maroon-dark); color: var(--white); }
+    th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
+    td { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafafa; }
+
+    /* Status badges */
+    .status-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .status-active   { background: var(--green-bg);  color: var(--green);  }
+    .status-overdue  { background: var(--red-bg);    color: var(--red);    }
+    .status-duesoon  { background: var(--orange-bg); color: var(--orange); }
+    .status-returned { background: #f0f0f0;           color: #555;          }
+
+    /* Action buttons */
+    .return-btn { font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 6px; border: none; cursor: pointer; background: var(--maroon); color: var(--white); font-family: inherit; transition: opacity 0.2s; }
+    .return-btn:hover { opacity: 0.85; }
+    .pay-btn { font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 6px; border: none; cursor: pointer; background: #f59f00; color: #fff; font-family: inherit; transition: opacity 0.2s; }
+    .pay-btn:hover { opacity: 0.85; }
+
+    /* Empty / loading */
+    .empty-state { text-align: center; padding: 48px 20px; background: var(--white); border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); color: var(--muted); }
+    .empty-state p { font-size: 14px; }
+    .spinner { text-align: center; padding: 40px; color: var(--muted); font-size: 14px; }
+
+    /* Toast */
+    #toast { position: fixed; bottom: 24px; right: 24px; background: #222; color: #fff; padding: 12px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.3s; z-index: 9999; pointer-events: none; max-width: 320px; }
+    #toast.show { opacity: 1; }
+    #toast.success { background: #1a7a1a; }
+    #toast.error   { background: #c00; }
+    #toast.info    { background: #1565c0; }
+
+    @media (max-width: 600px) {
+      .welcome-card { flex-direction: column; }
+      .navbar { padding: 0 16px; }
+      .nav-brand span { display: none; }
+      table { font-size: 12px; }
+      th, td { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">
+    <img src="logo.png" alt="RAIT Logo" />
+    <span>RAIT Smart Library</span>
+  </div>
+  <div class="nav-right">
+    <div id="adminNavLink"></div>
+    <div class="user-pill">
+      <span id="navUserName">...</span>
+      <span class="role-badge" id="navUserRole">...</span>
+    </div>
+    <button class="logout-btn" id="logoutBtn">Logout</button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- Welcome -->
+  <div class="welcome-card">
+    <div>
+      <h1 id="welcomeMsg">Welcome back!</h1>
+    </div>
+    <div class="welcome-stats">
+      <div class="stat"><div class="stat-num" id="totalBooks">–</div><div class="stat-label">Total Books</div></div>
+      <div class="stat"><div class="stat-num" id="availBooks">–</div><div class="stat-label">Available</div></div>
+    </div>
+  </div>
+
+  <!-- Stat cards -->
+  <div class="cards-row">
+    <div class="info-card">
+      <div class="label">Books Borrowed</div>
+      <div class="value" id="statBorrowed">0</div>
+    </div>
+    <div class="info-card">
+      <div class="label">Return Due Soon</div>
+      <div class="value" id="statDue">0</div>
+    </div>
+    <div class="info-card">
+      <div class="label">Fees Due</div>
+      <div class="value" id="statFees">&#8377;0</div>
+    </div>
+  </div>
+
+  <!-- My Borrowed Books -->
+  <div class="section-header">
+    <h2>My Borrowed Books</h2>
+  </div>
+  <div id="borrowedContainer">
+    <div class="spinner">Loading...</div>
+  </div>
+
+  <!-- All Books -->
+  <div class="section-header" style="margin-top:32px;">
+    <h2>All Books</h2>
+  </div>
+  <div id="booksContainer">
+    <div class="spinner">Loading books...</div>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+var TOKEN, USER, borrowedBookIds = {};
+
+// ── Toast ────────────────────────────────────────────────────────────────────
+function showToast(msg, type) {
+  var $t = $("#toast");
+  $t.text(msg).removeClass("success error info").addClass(type || "").addClass("show");
+  setTimeout(function () { $t.removeClass("show"); }, 4000);
+}
+
+function formatDate(d) {
+  return new Date(d).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+// ── Razorpay payment flow ────────────────────────────────────────────────────
+function openRazorpay(borrowId, fine) {
+  showToast("Creating payment order...", "info");
+
+  $.ajax({
+    url: "http://localhost:5000/api/payments/create-order",
+    method: "POST",
+    headers: { Authorization: "Bearer " + TOKEN, "Content-Type": "application/json" },
+    data: JSON.stringify({ borrowId: borrowId }),
+    success: function (order) {
+      var options = {
+        key:         order.keyId,
+        amount:      order.amount * 100,
+        currency:    "INR",
+        name:        "RAIT Smart Library",
+        description: "Fine payment for: " + order.bookTitle,
+        order_id:    order.orderId,
+        theme:       { color: "#800000" },
+        prefill: {
+          name:  USER.name,
+          email: USER.email
+        },
+        handler: function (response) {
+          // Verify payment on backend
+          showToast("Verifying payment...", "info");
+          $.ajax({
+            url: "http://localhost:5000/api/payments/verify",
+            method: "POST",
+            headers: { Authorization: "Bearer " + TOKEN, "Content-Type": "application/json" },
+            data: JSON.stringify({
+              razorpay_order_id:   response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature:  response.razorpay_signature,
+              borrowId:            borrowId
+            }),
+            success: function (res) {
+              showToast("Payment of \u20B9" + res.fine + " successful! Book returned.", "success");
+              loadMyBorrows(function () { loadBooks(); });
+            },
+            error: function (xhr) {
+              showToast((xhr.responseJSON && xhr.responseJSON.message) || "Payment verification failed.", "error");
+            }
+          });
+        },
+        modal: {
+          ondismiss: function () {
+            showToast("Payment cancelled.", "error");
+          }
+        }
+      };
+      var rzp = new Razorpay(options);
+      rzp.open();
+    },
+    error: function (xhr) {
+      showToast((xhr.responseJSON && xhr.responseJSON.message) || "Could not create payment order.", "error");
+    }
+  });
+}
+
+// ── Load my borrows ──────────────────────────────────────────────────────────
+function loadMyBorrows(callback) {
+  $.ajax({
+    url: "http://localhost:5000/api/borrows/my",
+    headers: { Authorization: "Bearer " + TOKEN },
+    success: function (data) {
+      borrowedBookIds = {};
+      var active = data.filter(function (b) { return b.status !== "returned"; });
+      var totalFine = 0, dueSoon = 0;
+
+      active.forEach(function (b) {
+        borrowedBookIds[b.book._id] = b._id;
+        totalFine += b.fine || 0;
+        if (b.dueSoon) dueSoon++;
+      });
+
+      $("#statBorrowed").text(active.length);
+      $("#statDue").text(dueSoon);
+      $("#statFees").text("\u20B9" + totalFine);
+
+      if (data.length === 0) {
+        $("#borrowedContainer").html(
+          '<div class="empty-state"><p>You have not borrowed any books yet.</p></div>'
+        );
+        if (callback) callback();
+        return;
+      }
+
+      var html = '<div class="borrow-table-wrap"><table><thead><tr>' +
+        '<th>Book</th><th>Author</th><th>Borrowed On</th><th>Due Date</th><th>Fine</th><th>Status</th><th>Action</th>' +
+        '</tr></thead><tbody>';
+
+      data.forEach(function (b) {
+        var statusLabel, statusClass;
+        if (b.status === "returned") {
+          statusLabel = "Returned"; statusClass = "status-returned";
+        } else if (b.status === "overdue") {
+          statusLabel = "Overdue"; statusClass = "status-overdue";
+        } else if (b.dueSoon) {
+          statusLabel = "Due Soon"; statusClass = "status-duesoon";
+        } else {
+          statusLabel = "Active"; statusClass = "status-active";
+        }
+
+        var actionBtn = "–";
+        if (b.status !== "returned") {
+          if (b.fine > 0) {
+            // Overdue — payment required
+            actionBtn = '<button class="pay-btn" data-id="' + b._id + '" data-fine="' + b.fine + '">' +
+              'Pay \u20B9' + b.fine + ' &amp; Return</button>';
+          } else {
+            // No fine — plain return
+            actionBtn = '<button class="return-btn" data-id="' + b._id + '">Return</button>';
+          }
+        }
+
+        html += "<tr>" +
+          "<td><strong>" + $("<div>").text(b.book.title).html() + "</strong></td>" +
+          "<td>" + $("<div>").text(b.book.author).html() + "</td>" +
+          "<td>" + formatDate(b.borrowDate) + "</td>" +
+          "<td>" + formatDate(b.dueDate) + "</td>" +
+          "<td>" + (b.fine > 0 ? "\u20B9" + b.fine : "–") + "</td>" +
+          '<td><span class="status-badge ' + statusClass + '">' + statusLabel + "</span></td>" +
+          "<td>" + actionBtn + "</td>" +
+          "</tr>";
+      });
+
+      html += "</tbody></table></div>";
+      $("#borrowedContainer").html(html);
+
+      // Plain return (no fine)
+      $(document).off("click", ".return-btn").on("click", ".return-btn", function () {
+        var borrowId = $(this).data("id");
+        var $btn = $(this).prop("disabled", true).text("Returning...");
+        $.ajax({
+          url: "http://localhost:5000/api/borrows/" + borrowId + "/return",
+          method: "PUT",
+          headers: { Authorization: "Bearer " + TOKEN },
+          success: function () {
+            showToast("Book returned successfully!", "success");
+            loadMyBorrows(function () { loadBooks(); });
+          },
+          error: function (xhr) {
+            showToast((xhr.responseJSON && xhr.responseJSON.message) || "Return failed.", "error");
+            $btn.prop("disabled", false).text("Return");
+          }
+        });
+      });
+
+      // Pay fine & return (Razorpay)
+      $(document).off("click", ".pay-btn").on("click", ".pay-btn", function () {
+        var borrowId = $(this).data("id");
+        var fine     = $(this).data("fine");
+        openRazorpay(borrowId, fine);
+      });
+
+      if (callback) callback();
+    },
+    error: function () {
+      $("#borrowedContainer").html(
+        '<div class="empty-state"><p>Could not load your borrows. Is the server running?</p></div>'
+      );
+      if (callback) callback();
+    }
+  });
+}
+
+// ── Load all books ───────────────────────────────────────────────────────────
+function loadBooks() {
+  $.ajax({
+    url: "http://localhost:5000/api/books",
+    headers: { Authorization: "Bearer " + TOKEN },
+    success: function (books) {
+      $("#totalBooks").text(books.length);
+      var avail = books.filter(function (b) { return b.quantity > 0; }).length;
+      $("#availBooks").text(avail);
+
+      if (books.length === 0) {
+        $("#booksContainer").html(
+          '<div class="empty-state"><p>No books in the library yet.</p></div>'
+        );
+        return;
+      }
+
+      var html = '<div class="books-grid">';
+      books.forEach(function (book) {
+        var outOfStock  = book.quantity < 1;
+        var alreadyHave = !!borrowedBookIds[book._id];
+        var qtyLabel    = outOfStock ? "Out of stock" : book.quantity + " available";
+        var btnText     = alreadyHave ? "Borrowed" : "Borrow";
+        var btnClass    = alreadyHave ? " borrowed" : "";
+        var btnDis      = (outOfStock || alreadyHave) ? " disabled" : "";
+
+        var coverHtml = book.imageUrl
+          ? '<img src="' + book.imageUrl + '" alt="cover" style="width:100%;height:130px;object-fit:cover;border-radius:8px 8px 0 0;margin:-20px -20px 12px -20px;width:calc(100% + 40px);" onerror="this.remove()" />'
+          : '';
+
+        html += '<div class="book-card">' +
+          coverHtml +
+          '<div class="book-title">' + $("<div>").text(book.title).html() + "</div>" +
+          '<div class="book-author">by ' + $("<div>").text(book.author).html() + "</div>" +
+          '<div class="book-footer">' +
+            '<span class="qty-badge' + (outOfStock ? " out" : "") + '">' + qtyLabel + "</span>" +
+            '<button class="borrow-btn' + btnClass + '" data-id="' + book._id + '"' + btnDis + '>' + btnText + "</button>" +
+          "</div></div>";
+      });
+      html += "</div>";
+      $("#booksContainer").html(html);
+
+      $(document).off("click", ".borrow-btn").on("click", ".borrow-btn", function () {
+        var bookId = $(this).data("id");
+        var $btn = $(this).prop("disabled", true).text("Borrowing...");
+        $.ajax({
+          url: "http://localhost:5000/api/borrows",
+          method: "POST",
+          headers: { Authorization: "Bearer " + TOKEN, "Content-Type": "application/json" },
+          data: JSON.stringify({ bookId: bookId }),
+          success: function () {
+            showToast("Book borrowed! Due in 14 days.", "success");
+            loadMyBorrows(function () { loadBooks(); });
+          },
+          error: function (xhr) {
+            showToast((xhr.responseJSON && xhr.responseJSON.message) || "Could not borrow.", "error");
+            $btn.prop("disabled", false).text("Borrow");
+          }
+        });
+      });
+    },
+    error: function () {
+      $("#booksContainer").html(
+        '<div class="empty-state"><p>Could not load books. Is the server running?</p></div>'
+      );
+    }
+  });
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+$(function () {
+  TOKEN = localStorage.getItem("token");
+  USER  = JSON.parse(localStorage.getItem("user") || "null");
+
+  if (!TOKEN || !USER) { window.location.href = "/login.html"; return; }
+
+  $("#navUserName").text(USER.name);
+  $("#navUserRole").text(USER.role);
+  $("#welcomeMsg").text("Welcome back, " + USER.name.split(" ")[0] + "!");
+
+  if (USER.role === "admin") {
+    $("#adminNavLink").html('<a href="/admin.html" style="color:rgba(255,255,255,0.85);font-size:13px;font-weight:700;text-decoration:none;padding:6px 14px;border-radius:6px;background:rgba(255,255,255,0.12);">Admin Panel</a>');
+  }
+
+  $("#logoutBtn").on("click", function () {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/login.html";
+  });
+
+  loadMyBorrows(function () { loadBooks(); });
+});
+</script>
+</body>
+</html>
