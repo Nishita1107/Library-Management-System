@@ -131,5 +131,3 @@ This project demonstrates practical experience with:
 * PDF generation
 * Scheduled background tasks
 
-
-GitHub: [Nishita1107](https://github.com/Nishita1107)
